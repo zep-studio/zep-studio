@@ -9,6 +9,7 @@ import { ConditionStartBlock } from '../../components/zep-studio-blocks/Conditio
 import { TriggerBlock } from '../../components/zep-studio-blocks/TriggerBlock';
 import { BasicActionBlock } from '../../components/zep-studio-blocks/actions/BasicActionBlock';
 import { RepeatActionBlock } from '../../components/zep-studio-blocks/actions/RepeatActionBlock';
+import { ConditionStatementBlock } from '../../components/zep-studio-blocks/condition-statements/ConditionStatementBlock';
 
 export const StudioPage: React.FC = () => {
   return (
@@ -20,7 +21,10 @@ export const StudioPage: React.FC = () => {
             <BlockList>
               <TriggerBlock />
               <StrightArrow />
-              <ConditionStartBlock />
+              <ConditionStartBlock>
+                <ConditionStatementBlock />
+                <ConditionStatementBlock isLastItem />
+              </ConditionStartBlock>
 
               <ConditionForkList>
                 <ConditionForkBlock satisfied>
