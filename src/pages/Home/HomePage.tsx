@@ -41,14 +41,14 @@ const FUNCTION_CARDS = [
   },
   {
     imageURL: '/assets/functions/function-thumbnail-05.png',
-    title: 'Function Name',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    title: 'Customer service',
+    description: 'Actions when a player send a message',
     badge: '🛍 Commerce',
   },
   {
     imageURL: '/assets/functions/function-thumbnail-06.png',
-    title: 'Function Name',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    title: 'Attendance check',
+    description: 'Actions whenever a player leaves',
     badge: '📚 Education',
   },
 ];
