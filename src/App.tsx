@@ -5,7 +5,7 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 
 import BlocklyExamplePage from './Blockly/BlocklyExamplePage';
-import Home from './Home';
+import HomePage from './Home/HomePage';
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/blockly" element={<BlocklyExamplePage />}></Route>
-          <Route path="/" element={<Home />}></Route>
+          <Route path="/" element={<HomePage />}></Route>
         </Routes>
       </Router>
     </RecoilRoot>

@@ -1,10 +1,10 @@
 import { Box, Button, Flex, Stack, Text } from '@chakra-ui/react';
 import { useRecoilState } from 'recoil';
 
-import Navigation from './Navigation';
-import BlockListItem from './components/BlockListItem';
-import blocksState from './store/blocksState';
-import { Block } from './types';
+import Navigation from '../Navigation';
+import BlockListItem from '../components/BlockListItem';
+import blocksState from '../store/blocksState';
+import { Block } from '../types';
 
 function Home() {
   const [blocks, setBlocks] = useRecoilState<Block[]>(blocksState);
