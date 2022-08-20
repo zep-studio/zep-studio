@@ -35,6 +35,7 @@ export default function BlocklyExamplePage() {
 
         <Block type="text" />
         <Block type="math_number" />
+        <Block type="variables_get" />
 
         <Block type="controls_ifelse" />
         <Block type="logic_compare" />
