@@ -10,35 +10,33 @@ import { RepeatActionBlock } from '../../components/zep-studio-blocks/actions/Re
 
 export const StudioPage: React.FC = () => {
   return (
-    <div className="App">
-      <main>
-        <Navigation />
-        <Box>
-          <Flex h="100vh">
-            <Stack w="full" h="full" padding="54px" bg={'gray.200'}>
-              <TriggerBlock />
-              <ConditionStartBlock />
-              <ConditionForkBlock satisfied>
+    <main>
+      <Navigation />
+      <Box>
+        <Flex h="100vh">
+          <Stack w="full" h="full" padding="54px" bg={'gray.200'}>
+            <TriggerBlock />
+            <ConditionStartBlock />
+            <ConditionForkBlock satisfied>
+              <BasicActionBlock />
+            </ConditionForkBlock>
+            <ConditionForkBlock satisfied={false}>
+              <RepeatActionBlock>
                 <BasicActionBlock />
-              </ConditionForkBlock>
-              <ConditionForkBlock satisfied={false}>
-                <RepeatActionBlock>
-                  <BasicActionBlock />
-                  <BasicActionBlock />
-                </RepeatActionBlock>
-              </ConditionForkBlock>
-              <ConditionEndBlock />
-            </Stack>
-            <Stack
-              w="25vw"
-              h="full"
-              spacing={10}
-              alignItems="flex-start"
-              bg={'gray.600'}
-            ></Stack>
-          </Flex>
-        </Box>
-      </main>
-    </div>
+                <BasicActionBlock />
+              </RepeatActionBlock>
+            </ConditionForkBlock>
+            <ConditionEndBlock />
+          </Stack>
+          <Stack
+            w="25vw"
+            h="full"
+            spacing={10}
+            alignItems="flex-start"
+            bg={'gray.600'}
+          ></Stack>
+        </Flex>
+      </Box>
+    </main>
   );
 };
