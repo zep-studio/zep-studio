@@ -1,6 +1,7 @@
 import { Box, Flex, Stack } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   SCRIPTAPP_LIFECYCLE_ON_INIT,
@@ -58,14 +59,12 @@ export const StudioPage: React.FC = () => {
                   let newBlock: BlockDraft | null = null;
                   if (blockType === 'condition') {
                     newBlock = {
-                      // TODO: Randomize ID
-                      id: `${index}-condition-start`,
+                      id: uuidv4(),
                       type: 'condition',
                     } as ConditionBlockDraft;
                   } else if (blockType === SCRIPTAPP_METHODS_SAY_TO_ALL) {
                     newBlock = {
-                      // TODO: Randomize ID,
-                      id: `${index}-say-to-all`,
+                      id: uuidv4(),
                       type: 'action',
                       action: SCRIPTAPP_METHODS_SAY_TO_ALL,
                     } as ActionBlockDraft;
