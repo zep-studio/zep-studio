@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import BlocklyComponent, { Block, Field, Shadow, Value } from '.';
 
-import '../blocks/customblocks';
+import '../blocks';
 
 export default function BlocklyExamplePage() {
   return (
