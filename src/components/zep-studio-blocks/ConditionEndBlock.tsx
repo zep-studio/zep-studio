@@ -23,6 +23,7 @@ export const ConditionEndBlock: React.FC<Props> = ({ children }) => {
 const Container = styled.div`
   width: fit-content;
   min-width: 300px;
+  filter: drop-shadow(0px 8px 24px rgba(0, 0, 0, 0.1));
 `;
 const Header = styled(BlockHeader)`
   background: #74c1d9;
