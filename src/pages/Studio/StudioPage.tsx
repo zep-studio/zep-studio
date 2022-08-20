@@ -16,7 +16,7 @@ export const StudioPage: React.FC = () => {
       <Navigation />
       <Box paddingTop="68px">
         <Flex h="100vh">
-          <Stack w="full" h="full" padding="54px" bg={'gray.200'}>
+          <Stack w="full" h="150vh" padding="54px" bg={'gray.200'}>
             <BlockList>
               <TriggerBlock />
               <StrightArrow />
@@ -39,11 +39,14 @@ export const StudioPage: React.FC = () => {
           </Stack>
           <Stack
             w="25vw"
-            h="full"
+            h="150vh"
+            position="relative"
             spacing={10}
             alignItems="flex-start"
             bg={'gray.600'}
-          ></Stack>
+          >
+            <Stack w="full" h="100vh" position="sticky" top="0"></Stack>
+          </Stack>
         </Flex>
       </Box>
     </main>
@@ -55,10 +58,6 @@ const BlockList = styled.div`
   flex-direction: column;
   align-items: center;
   z-index: 0;
-
-  /* & > * {
-    z-index: 0;
-  } */
 `;
 
 const StrightArrow: React.FC = () => (

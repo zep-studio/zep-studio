@@ -1,18 +1,51 @@
 import { Center } from '@chakra-ui/react';
 import styled from '@emotion/styled';
+import { AnimatePresence } from 'framer-motion';
+import { useRef, useState } from 'react';
 
 import { ZEPStudioIcon } from '../../ZEPStudioIcon';
+import { raiseAncestorControlBlock } from './ControlBlockContainer';
+import { Selector, SelectorWrapper } from './Selector';
 
 type Props = {};
 
 export const BlockFooter: React.FC<Props> = () => {
+  const [isSelectorOpen, setSelectorOpen] = useState<boolean>(false);
+  const cleanupRef = useRef<any>(null);
+
   return (
-    <Container>
-      <Center gap="8px">
-        <ZEPStudioIcon icon="icon_plus_24" size={24} />
-        <ButtonTitle>Create a new block</ButtonTitle>
-      </Center>
-    </Container>
+    <SelectorWrapper>
+      <Container
+        onClick={(event) => {
+          cleanupRef.current = raiseAncestorControlBlock(event.target);
+          setSelectorOpen((prev) => !prev);
+          setTimeout(() => {
+            if (isSelectorOpen) {
+              setTimeout(() => cleanupRef.current?.(), 200);
+            }
+          });
+        }}
+      >
+        <Center gap="8px">
+          <ZEPStudioIcon icon="icon_plus_24" size={24} />
+          <ButtonTitle>Create a new block</ButtonTitle>
+        </Center>
+      </Container>
+
+      <AnimatePresence>
+        {isSelectorOpen && (
+          <Selector
+            items={Array.from({ length: 10 }, (_, i) => ({
+              title: 'Touch location',
+              value: 'Touch',
+              description:
+                "When a player arrives in the specified 'specified area'",
+            }))}
+            style={{ top: 48 + 8, left: 'unset', right: 82 }}
+          />
+        )}
+      </AnimatePresence>
+    </SelectorWrapper>
   );
 };
 

@@ -1,15 +1,10 @@
 import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
+import { HTMLMotionProps, motion } from 'framer-motion';
 
 export type SelectItem = {
   title: string;
   value: string;
   description: string;
-};
-
-type Props = {
-  type?: 'primary' | 'secondary';
-  items?: SelectItem[];
 };
 
 export const SelectorWrapper = styled.div`
@@ -19,13 +14,23 @@ export const SelectorWrapper = styled.div`
   position: relative;
 `;
 
-export const Selector: React.FC<Props> = ({ type = 'primary', items = [] }) => {
+type Props = HTMLMotionProps<'div'> & {
+  type?: 'primary' | 'secondary';
+  items?: SelectItem[];
+};
+
+export const Selector: React.FC<Props> = ({
+  type = 'primary',
+  items = [],
+  ...props
+}) => {
   return (
     <Container
       initial={{ opacity: 0, transform: 'translateY(8px)' }}
       animate={{ opacity: 1, transform: 'translateY(0px)' }}
       exit={{ opacity: 0, transform: 'translateY(-8px)' }}
       transition={{ duration: 0.2, ease: 'easeInOut' }}
+      {...props}
     >
       {items.map((item) => (
         <SelectItemContainer key={item.value}>
