@@ -2,7 +2,7 @@ import * as Blockly from 'blockly/core';
 
 import 'blockly/javascript';
 
-const SCRIPTAPP_LIFECYCLE_ON_INIT = 'scriptapp_lifecycle_on_init';
+export const SCRIPTAPP_LIFECYCLE_ON_INIT = 'scriptapp_lifecycle_on_init';
 Blockly.Blocks[SCRIPTAPP_LIFECYCLE_ON_INIT] = {
   init: function () {
     this.jsonInit({
@@ -22,7 +22,28 @@ Blockly.JavaScript[SCRIPTAPP_LIFECYCLE_ON_INIT] = function (block) {
   return `App.onInit.Add(function(){\n` + branch + `\n});`;
 };
 
-const SCRIPTAPP_METHODS_SAY_TO_ALL = 'scriptapp_methods_say_to_all';
+export const SCRIPTAPP_EVENT_LISTENERS_ON_SAY =
+  'scriptapp_event_listeners_on_say';
+Blockly.Blocks[SCRIPTAPP_EVENT_LISTENERS_ON_SAY] = {
+  init: function () {
+    this.jsonInit({
+      type: SCRIPTAPP_EVENT_LISTENERS_ON_SAY,
+      message0: 'When someone says something',
+      message1: 'do %1',
+      args1: [{ type: 'input_statement', name: 'DO' }],
+      previousStatement: null,
+      nextStatement: null,
+    });
+    this.setStyle('loop_blocks');
+  },
+};
+Blockly.JavaScript[SCRIPTAPP_EVENT_LISTENERS_ON_SAY] = function (block) {
+  let branch = Blockly.JavaScript.statementToCode(block, 'DO');
+  branch = Blockly.JavaScript.addLoopTrap(branch, block);
+  return `App.onSay.Add(function(){\n` + branch + `\n});`;
+};
+
+export const SCRIPTAPP_METHODS_SAY_TO_ALL = 'scriptapp_methods_say_to_all';
 Blockly.Blocks[SCRIPTAPP_METHODS_SAY_TO_ALL] = {
   init: function () {
     this.jsonInit({

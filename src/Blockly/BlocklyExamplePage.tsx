@@ -4,6 +4,12 @@ import BlocklyComponent, { Block, Field, Shadow, Value } from '.';
 
 import '../blocks';
 
+import {
+  SCRIPTAPP_EVENT_LISTENERS_ON_SAY,
+  SCRIPTAPP_LIFECYCLE_ON_INIT,
+  SCRIPTAPP_METHODS_SAY_TO_ALL,
+} from '../blocks/scriptapp';
+
 export default function BlocklyExamplePage() {
   return (
     <Container>
@@ -18,13 +24,14 @@ export default function BlocklyExamplePage() {
         }}
         initialXml={`
             <xml xmlns="http://www.w3.org/1999/xhtml">
-              <block type="scriptapp_lifecycle_on_init" x="0" y="0">
+              <block type="${SCRIPTAPP_LIFECYCLE_ON_INIT}" x="0" y="0">
               </block>
             </xml>
           `}
       >
-        <Block type="scriptapp_lifecycle_on_init" />
-        <Block type="scriptapp_methods_say_to_all" />
+        <Block type={SCRIPTAPP_LIFECYCLE_ON_INIT} />
+        <Block type={SCRIPTAPP_EVENT_LISTENERS_ON_SAY} />
+        <Block type={SCRIPTAPP_METHODS_SAY_TO_ALL} />
 
         <Block type="text" />
         <Block type="math_number" />
