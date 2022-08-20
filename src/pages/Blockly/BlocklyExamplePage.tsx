@@ -2,13 +2,13 @@ import styled from '@emotion/styled';
 
 import BlocklyComponent, { Block, Field, Shadow, Value } from '.';
 
-import '../blocks';
+import '../../blocks';
 
 import {
   SCRIPTAPP_EVENT_LISTENERS_ON_SAY,
   SCRIPTAPP_LIFECYCLE_ON_INIT,
   SCRIPTAPP_METHODS_SAY_TO_ALL,
-} from '../blocks/scriptapp';
+} from '../../blocks/scriptapp';
 
 export default function BlocklyExamplePage() {
   return (
