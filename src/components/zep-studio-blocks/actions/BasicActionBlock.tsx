@@ -9,7 +9,7 @@ type Props = {};
 
 export const BasicActionBlock: React.FC<Props> = () => {
   return (
-    <Container>
+    <Container className="action-block">
       <BlockHandle />
       <Center gap="8px">
         <BlockActionName>Say</BlockActionName>

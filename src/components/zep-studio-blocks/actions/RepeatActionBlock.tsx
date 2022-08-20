@@ -13,7 +13,7 @@ type Props = ControlBlockProps & {};
 export const RepeatActionBlock: React.FC<Props> = ({ children }) => {
   return (
     <RepeatScopeList $hasChildren={!!children}>
-      <Container>
+      <Container className="action-block">
         <RepeatIndicator>
           <ZEPStudioIcon icon="icon_repeat_24" size={24} color="#ADB5BD" />
         </RepeatIndicator>
@@ -26,7 +26,7 @@ export const RepeatActionBlock: React.FC<Props> = ({ children }) => {
         <BlockRemoveButton />
       </Container>
 
-      {children}
+      {!!children && <ChildrenContent>{children}</ChildrenContent>}
     </RepeatScopeList>
   );
 };
@@ -45,6 +45,15 @@ const RepeatScopeList = styled.div<RepeatScopeListProps>`
 
       border-bottom: 1px solid #e3e7ec;
     `};
+`;
+const ChildrenContent = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .action-block {
+    padding-left: 36px;
+  }
 `;
 
 const Container = styled.div`
