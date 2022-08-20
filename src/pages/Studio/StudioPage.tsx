@@ -8,7 +8,7 @@ import { TriggerBlock } from '../../components/zep-studio-blocks/TriggerBlock';
 import { BasicActionBlock } from '../../components/zep-studio-blocks/actions/BasicActionBlock';
 import { RepeatActionBlock } from '../../components/zep-studio-blocks/actions/RepeatActionBlock';
 
-function Home() {
+export const StudioPage: React.FC = () => {
   return (
     <div className="App">
       <main>
@@ -41,6 +41,4 @@ function Home() {
       </main>
     </div>
   );
-}
-
-export default Home;
+};
