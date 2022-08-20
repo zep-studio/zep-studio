@@ -33,7 +33,7 @@ const Container = styled.button`
   transition: all 0.2s ease-in-out;
 
   &:hover {
-    background: rgba(0, 0, 0, 0.035);
+    background: #f2f2f2;
   }
 `;
 
