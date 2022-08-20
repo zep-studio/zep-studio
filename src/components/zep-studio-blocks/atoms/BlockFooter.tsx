@@ -25,7 +25,10 @@ const NEW_BLOCKS = [
 
 type Props = {
   parentBlockType: string;
-  onAddNewBlock: (blockType: string) => void;
+  onAddNewBlock: (
+    blockType: string,
+    position: [string, 'if' | 'else'] | 'below',
+  ) => void;
 };
 
 export const BlockFooter: React.FC<Props> = ({
@@ -63,7 +66,7 @@ export const BlockFooter: React.FC<Props> = ({
             )}
             style={{ top: 48 + 8, left: 'unset', right: 82 }}
             onSelect={(value) => {
-              onAddNewBlock?.(value);
+              onAddNewBlock?.(value, 'below');
               cleanupRef.current = raiseAncestorControlBlock(centerRef.current);
 
               setSelectorOpen((prev) => !prev);

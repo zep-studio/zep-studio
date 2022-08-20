@@ -7,7 +7,10 @@ import { ControlBlockContainer } from '../atoms/ControlBlockContainer';
 import { ControlBlockProps } from '../types';
 
 type Props = ControlBlockProps & {
-  onAddNewBlock: (blockType: string) => void;
+  onAddNewBlock: (
+    blockType: string,
+    position: [string, 'if' | 'else'] | 'below',
+  ) => void;
 };
 
 export const ConditionStartBlock: React.FC<Props> = ({

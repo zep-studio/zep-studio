@@ -7,7 +7,10 @@ import { ControlBlockProps } from '../types';
 
 type Props = ControlBlockProps & {
   satisfied: boolean;
-  onAddNewBlock: (blockType: string) => void;
+  onAddNewBlock: (
+    blockType: string,
+    position: [string, 'if' | 'else'] | 'below',
+  ) => void;
 };
 
 export const ConditionForkBlock: React.FC<Props> = ({

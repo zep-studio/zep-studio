@@ -34,7 +34,10 @@ const TRIGGERS = [
 type Props = ControlBlockProps & {
   trigger: string | undefined;
   setBlock: (block: Partial<TriggerBlockDraft>) => void;
-  onAddNewBlock: (blockType: string) => void;
+  onAddNewBlock: (
+    blockType: string,
+    position: [string, 'if' | 'else'] | 'below',
+  ) => void;
 };
 
 export const TriggerBlock: React.FC<Props> = ({

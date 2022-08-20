@@ -55,12 +55,18 @@ export const StudioPage: React.FC = () => {
                   setBlocks(newBlocks);
                 };
 
-                const onAddNewBlock = (blockType: string) => {
+                const onAddNewBlock = (
+                  blockType: string,
+                  position: [string, 'if' | 'else'] | 'below',
+                ) => {
                   let newBlock: BlockDraft | null = null;
                   if (blockType === 'condition') {
+                    const id = uuidv4();
                     newBlock = {
-                      id: uuidv4(),
+                      id,
                       type: 'condition',
+                      if: [],
+                      else: [],
                     } as ConditionBlockDraft;
                   } else if (blockType === SCRIPTAPP_METHODS_SAY_TO_ALL) {
                     newBlock = {
@@ -72,7 +78,35 @@ export const StudioPage: React.FC = () => {
                   if (!newBlock) {
                     return;
                   }
-                  setBlocks((prev) => [...prev, newBlock as BlockDraft]);
+
+                  if (position === 'below') {
+                    setBlocks((prev) => [...prev, newBlock as BlockDraft]);
+                  } else {
+                    // position is [block id, 'if' | 'else']
+                    const [blockId, positionType] = position as [
+                      string,
+                      'if' | 'else',
+                    ];
+
+                    const newBlocks = [...blocks];
+                    const blockIndex = newBlocks.findIndex(
+                      (block) => block.id === blockId,
+                    );
+                    if (blockIndex === -1) {
+                      return;
+                    }
+                    if (positionType === 'if') {
+                      (newBlocks[blockIndex] as ConditionBlockDraft).if.push(
+                        newBlock,
+                      );
+                    }
+                    if (positionType === 'else') {
+                      (newBlocks[blockIndex] as ConditionBlockDraft).else.push(
+                        newBlock,
+                      );
+                    }
+                    setBlocks(newBlocks);
+                  }
                 };
 
                 if (item.type === 'trigger') {

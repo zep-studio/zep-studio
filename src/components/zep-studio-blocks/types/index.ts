@@ -11,6 +11,8 @@ export type TriggerBlockDraft = {
 export type ConditionBlockDraft = {
   id: string;
   type: 'condition';
+  if: (ConditionBlockDraft | ActionBlockDraft)[];
+  else: (ConditionBlockDraft | ActionBlockDraft)[];
 };
 
 export type ActionBlockDraft = {
