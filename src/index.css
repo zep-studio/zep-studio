@@ -13,3 +13,8 @@ code {
 a:hover {
   text-decoration: none;
 }
+
+img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
