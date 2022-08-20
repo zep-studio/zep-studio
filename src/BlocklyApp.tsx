@@ -1,7 +1,5 @@
 import React from 'react';
 
-//  import './App.css';
-//  import logo from './logo.svg';
 import BlocklyComponent, { Block, Field, Shadow, Value } from './Blockly';
 
 import './blocks/customblocks';
@@ -11,7 +9,6 @@ export const BlocklyApp: React.FC = () => {
   return (
     <div className="App">
       <header className="App-header">
-        {/* <img src={logo} className="App-logo" alt="logo" /> */}
         <BlocklyComponent
           readOnly={false}
           trashcan={false}
@@ -28,8 +25,6 @@ export const BlocklyApp: React.FC = () => {
           `}
         >
           <Block type="lifecycle_on_init" />
-          <Block type="test_react_field" />
-          <Block type="test_react_date_field" />
 
           <Block type="controls_ifelse" />
           <Block type="logic_compare" />
