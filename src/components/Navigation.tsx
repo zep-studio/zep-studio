@@ -7,7 +7,13 @@ import { ZEPStudioIcon } from './ZEPStudioIcon';
 
 const Navigation: React.FC = () => {
   return (
-    <Flex h="68px" bg="#262A2E" color={'white'} p={3} justify={'space-between'}>
+    <Flex
+      h="68px"
+      bg="gray.600"
+      color={'white'}
+      p={3}
+      justify={'space-between'}
+    >
       <Center gap="12px">
         <ZEPStudioIcon icon="icon_prev_32" size={32} color="#adb5bd" />
         <GrayBreadcrumb>
