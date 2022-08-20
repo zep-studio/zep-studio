@@ -1,4 +1,6 @@
-import React, { useCallback, useState } from 'react';
+import prettierParserBabel from 'prettier/parser-babel';
+import prettier from 'prettier/standalone';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import './BlocklyComponent.css';
 
@@ -34,6 +36,20 @@ const BlocklyComponent: React.FC<BlocklyComponentProps> = (props) => {
   const primaryWorkspace = useRef<WorkspaceSvg | null>(null);
 
   const [generatedCode, setGeneratedCode] = useState<string>('');
+  const formattedCode = useMemo(() => {
+    if (!generatedCode) {
+      return '';
+    }
+    return prettier.format(generatedCode, {
+      bracketSpacing: true,
+      bracketSameLine: false,
+      singleQuote: true,
+      trailingComma: 'all',
+      semi: true,
+      parser: 'babel',
+      plugins: [prettierParserBabel],
+    });
+  }, [generatedCode]);
 
   const onClickConvert = useCallback(() => {
     const code = BlocklyJS.workspaceToCode(primaryWorkspace.current);
@@ -70,7 +86,7 @@ const BlocklyComponent: React.FC<BlocklyComponentProps> = (props) => {
     <React.Fragment>
       <button onClick={onClickConvert}>Convert</button>
       <pre>
-        <code>{generatedCode}</code>
+        <code>{formattedCode}</code>
       </pre>
       <div ref={blocklyDiv} id="blocklyDiv" />
       <div style={{ display: 'none' }} ref={toolbox}>
