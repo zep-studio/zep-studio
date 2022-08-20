@@ -43,7 +43,6 @@ Blockly.JavaScript[SCRIPTAPP_EVENT_LISTENERS_ON_SAY] = function (block) {
   let branch = Blockly.JavaScript.statementToCode(block, 'DO');
   branch = Blockly.JavaScript.addLoopTrap(branch, block);
 
-  console.log(block);
   return `App.onSay.Add(function(player, text){\n` + branch + `\n});`;
 };
 
@@ -55,7 +54,7 @@ Blockly.Blocks[SCRIPTAPP_METHODS_SAY_TO_ALL] = {
       message0: 'Say %1 to All',
       // message0: 'Say %1 with color %2 to All',
       args0: [
-        { type: 'input_value', name: 'TEXT', check: 'String' },
+        { type: 'field_string', name: 'TEXT', check: 'String' },
         // { type: 'input_value', name: 'COLOR', check: 'Number' },
       ],
       previousStatement: null,

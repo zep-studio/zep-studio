@@ -14,6 +14,8 @@ import 'blockly/blocks';
 
 import { WorkspaceSvg } from 'blockly/core';
 
+import { SCRIPTAPP_METHODS_SAY_TO_ALL } from '../../blocks/scriptapp';
+
 // @ts-ignore
 Blockly.setLocale(locale);
 
@@ -68,10 +70,22 @@ const BlocklyComponent: React.FC<BlocklyComponentProps> = (props) => {
 
     // Programmatic Block Creation
     const workspace = new Blockly.Workspace();
-    workspace.newBlock('scriptapp_lifecycle_on_init');
+    const init = workspace.newBlock('scriptapp_lifecycle_on_init');
     const trigger = workspace.newBlock('scriptapp_event_listeners_on_say');
+
+    const textVarId = trigger.getFieldValue('TEXT');
+    const textVar = workspace.getVariableById(textVarId);
+
     const say1 = workspace.newBlock('scriptapp_methods_say_to_all');
-    trigger.getInput('DO')?.connection.connect(say1.previousConnection);
+    init.getInput('DO')?.connection.connect(say1.previousConnection);
+
+    const iter = workspace.newBlock('controls_repeat');
+    iter.setFieldValue(5, 'TIMES');
+    trigger.getInput('DO')?.connection.connect(iter.previousConnection);
+
+    const say2 = workspace.newBlock(SCRIPTAPP_METHODS_SAY_TO_ALL);
+    // say2.setFieldValue('hi', 'TEXT')
+    iter.getInput('DO')?.connection.connect(say2.previousConnection);
 
     console.log(BlocklyJS.workspaceToCode(workspace));
   }, []);
