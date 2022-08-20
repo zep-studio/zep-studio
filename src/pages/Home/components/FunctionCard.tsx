@@ -2,21 +2,31 @@ import styled from '@emotion/styled';
 
 type Props = {
   imageURL?: string;
+  title?: string;
+  description?: string;
+  badge?: string;
 };
 
-export const FunctionCard: React.FC<Props> = ({ imageURL }) => {
+export const FunctionCard: React.FC<Props> = ({
+  imageURL,
+  title,
+  description,
+  badge,
+}) => {
   return (
     <Container>
       <ImageWrapper>
         {!!imageURL && <Image src={imageURL} />}
-        <BadgeList />
+        {!!badge && (
+          <BadgeList>
+            <Badge>{badge}</Badge>
+          </BadgeList>
+        )}
       </ImageWrapper>
 
       <FunctionInformation>
-        <FunctionName>FunctionCard</FunctionName>
-        <FunctionDescription>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        </FunctionDescription>
+        <FunctionName>{title}</FunctionName>
+        <FunctionDescription>{description}</FunctionDescription>
       </FunctionInformation>
     </Container>
   );
@@ -39,7 +49,43 @@ const Image = styled.img`
   width: 100%;
   height: 100%;
 `;
-const BadgeList = styled.ul``;
+
+const BadgeList = styled.ul`
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+`;
+const Badge = styled.li`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 6px 16px;
+  gap: 10px;
+
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(16px);
+  /* Note: backdrop-filter has minimal browser support */
+
+  border-radius: 8px;
+
+  /* body/01-bold */
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: center;
+  text-align: right;
+  letter-spacing: 0.0125em;
+
+  /* gray/04 */
+
+  color: #4d5359;
+`;
 
 const FunctionInformation = styled.div`
   margin-top: 20px;

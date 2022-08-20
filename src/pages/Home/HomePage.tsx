@@ -15,12 +15,42 @@ const BADGES = [
 ];
 
 const FUNCTION_CARDS = [
-  { imageURL: '/assets/functions/function-thumbnail-01.png' },
-  { imageURL: '/assets/functions/function-thumbnail-02.png' },
-  { imageURL: '/assets/functions/function-thumbnail-03.png' },
-  { imageURL: '/assets/functions/function-thumbnail-04.png' },
-  { imageURL: '/assets/functions/function-thumbnail-05.png' },
-  { imageURL: '/assets/functions/function-thumbnail-06.png' },
+  {
+    imageURL: '/assets/functions/function-thumbnail-01.png',
+    title: 'Space entry',
+    description: 'Actions when entering a space',
+    badge: '🎊 Event',
+  },
+  {
+    imageURL: '/assets/functions/function-thumbnail-02.png',
+    title: 'Attendance check',
+    description: 'Actions when characters collide',
+    badge: '🎊 Event',
+  },
+  {
+    imageURL: '/assets/functions/function-thumbnail-03.png',
+    title: 'Play music',
+    description: 'Play music under certain conditions',
+    badge: '🎊 Entertainment',
+  },
+  {
+    imageURL: '/assets/functions/function-thumbnail-04.png',
+    title: 'Examples with Time',
+    description: 'A function at a specified time interval(ms)',
+    badge: '✍️  Productive',
+  },
+  {
+    imageURL: '/assets/functions/function-thumbnail-05.png',
+    title: 'Function Name',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    badge: '🛍 Commerce',
+  },
+  {
+    imageURL: '/assets/functions/function-thumbnail-06.png',
+    title: 'Function Name',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    badge: '📚 Education',
+  },
 ];
 
 export const HomePage: React.FC = () => {
