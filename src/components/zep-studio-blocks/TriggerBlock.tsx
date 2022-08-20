@@ -1,12 +1,16 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { ZEPStudioIcon } from '../ZEPStudioIcon';
 import { BlockAttribute } from './atoms/BlockAttribute';
 import { BlockFooter } from './atoms/BlockFooter';
 import { BlockHeader } from './atoms/BlockHeader';
+import {
+  ControlBlockContainer,
+  raiseAncestorControlBlock,
+} from './atoms/ControlBlockContainer';
 import { Selector, SelectorWrapper } from './atoms/Selector';
 import { ControlBlockProps } from './types';
 
@@ -14,6 +18,7 @@ type Props = ControlBlockProps & {};
 
 export const TriggerBlock: React.FC<Props> = ({ children }) => {
   const [isSelectorOpen, setSelectorOpen] = useState<boolean>(false);
+  const cleanupRef = useRef<any>(null);
 
   return (
     <Container>
@@ -24,7 +29,15 @@ export const TriggerBlock: React.FC<Props> = ({ children }) => {
         <SelectorWrapper>
           <TriggerIntent
             $isSelectorOpen={isSelectorOpen}
-            onClick={() => setSelectorOpen((prev) => !prev)}
+            onClick={(event) => {
+              cleanupRef.current = raiseAncestorControlBlock(event.target);
+              setSelectorOpen((prev) => !prev);
+              setTimeout(() => {
+                if (isSelectorOpen) {
+                  setTimeout(() => cleanupRef.current?.(), 200);
+                }
+              });
+            }}
           >
             When someone says something
           </TriggerIntent>
@@ -50,9 +63,8 @@ export const TriggerBlock: React.FC<Props> = ({ children }) => {
   );
 };
 
-const Container = styled.div`
+const Container = styled(ControlBlockContainer)`
   width: fit-content;
-  filter: drop-shadow(0px 8px 24px rgba(0, 0, 0, 0.1));
 `;
 const Header = styled(BlockHeader)`
   /* main/01 */

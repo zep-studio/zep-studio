@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 
 import { BlockFooter } from './atoms/BlockFooter';
 import { BlockHeader } from './atoms/BlockHeader';
+import { ControlBlockContainer } from './atoms/ControlBlockContainer';
 import { ControlBlockProps } from './types';
 
 type Props = ControlBlockProps & {
@@ -27,10 +28,9 @@ export const ConditionForkBlock: React.FC<Props> = ({
   );
 };
 
-const Container = styled.div`
+const Container = styled(ControlBlockContainer)`
   width: fit-content;
   min-width: 300px;
-  filter: drop-shadow(0px 8px 24px rgba(0, 0, 0, 0.1));
 `;
 const Header = styled(BlockHeader)`
   background: #7e8992;

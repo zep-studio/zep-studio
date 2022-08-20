@@ -1,6 +1,6 @@
 import { Center, Flex } from '@chakra-ui/react';
 import styled from '@emotion/styled';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { publish } from '../core/publish';
 import { zipZepApp } from '../core/zip';
@@ -25,17 +25,24 @@ const Navigation: React.FC = () => {
       console.error(err);
     }
   };
+  const navigate = useNavigate();
 
   return (
-    <Flex
+    <Container
       h="68px"
+      zIndex="99"
       bg="gray.600"
       color={'white'}
       p={3}
       justify={'space-between'}
     >
       <Center gap="12px">
-        <ZEPStudioIcon icon="icon_prev_32" size={32} color="#adb5bd" />
+        <ZEPStudioIcon
+          icon="icon_prev_32"
+          size={32}
+          color="#adb5bd"
+          onClick={() => navigate(-1)}
+        />
         <GrayBreadcrumb>
           <Link to="/">ZEP studio</Link>
         </GrayBreadcrumb>
@@ -51,11 +58,18 @@ const Navigation: React.FC = () => {
           <ZEPStudioIcon icon="icon_more_24" size={24} color="#ADB5BD" />
         </SquareButton>
       </Center>
-    </Flex>
+    </Container>
   );
 };
 
 export default Navigation;
+
+const Container = styled(Flex)`
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+`;
 
 const GrayBreadcrumb = styled.span`
   /* subtitle/02 */

@@ -6,6 +6,7 @@ type ZEPStudioIconProps = {
   icon: string;
   className?: string;
   color?: string;
+  onClick?: () => void;
 };
 
 export const ZEPStudioIcon: React.FC<ZEPStudioIconProps> = (props) => {
@@ -15,6 +16,8 @@ export const ZEPStudioIcon: React.FC<ZEPStudioIconProps> = (props) => {
       size={props.size}
       icon={props.icon}
       color={props.color}
+      style={!props.onClick ? undefined : { cursor: 'pointer' }}
+      onClick={props.onClick}
     />
   );
 };
