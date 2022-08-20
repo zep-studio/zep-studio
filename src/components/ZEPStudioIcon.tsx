@@ -14,22 +14,34 @@ export const ZEPStudioIcon: React.FC<ZEPStudioIconProps> = (props) => {
       className={props.className}
       size={props.size}
       icon={props.icon}
-      style={{ backgroundColor: props.color }}
+      color={props.color}
     />
   );
 };
 
-const IconImage = styled.span<{ size: number; icon: string }>`
+const IconImage = styled.span<{
+  size: number;
+  icon: string;
+  color: string | undefined;
+}>`
   display: flex;
 
   ${({ size }) => css`
     width: ${size}px;
+    min-width: ${size}px;
+
     height: ${size}px;
+    min-height: ${size}px;
   `};
 
-  ${({ icon }) =>
-    !!icon &&
-    css`
-      mask-image: url('/assets/icons/${icon}.svg');
-    `};
+  ${({ color, icon }) =>
+    !color
+      ? css`
+          background-image: url('/assets/icons/${icon}.svg');
+        `
+      : !!icon &&
+        css`
+          mask-image: url('/assets/icons/${icon}.svg');
+          background-color: ${color};
+        `};
 `;
