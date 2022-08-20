@@ -1,6 +1,9 @@
 import { Box, Flex, Stack } from '@chakra-ui/react';
 
 import Navigation from '../../components/Navigation';
+import { ConditionEndBlock } from '../../components/zep-studio-blocks/ConditionEndBlock';
+import { ConditionForkBlock } from '../../components/zep-studio-blocks/ConditionForkBlock';
+import { ConditionStartBlock } from '../../components/zep-studio-blocks/ConditionStartBlock';
 import { TriggerBlock } from '../../components/zep-studio-blocks/TriggerBlock';
 
 function Home() {
@@ -12,6 +15,10 @@ function Home() {
           <Flex h="100vh">
             <Stack w="full" h="full" padding="54px" bg={'gray.200'}>
               <TriggerBlock />
+              <ConditionStartBlock />
+              <ConditionForkBlock satisfied />
+              <ConditionForkBlock satisfied={false} />
+              <ConditionEndBlock />
             </Stack>
             <Stack
               w="25vw"
