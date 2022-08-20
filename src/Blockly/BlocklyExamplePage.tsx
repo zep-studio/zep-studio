@@ -19,7 +19,6 @@ export default function BlocklyExamplePage() {
         initialXml={`
             <xml xmlns="http://www.w3.org/1999/xhtml">
               <block type="scriptapp_lifecycle_on_init" x="0" y="0">
-                <block type="scriptapp_methods_say_to_all" />
               </block>
             </xml>
           `}

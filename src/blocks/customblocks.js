@@ -27,10 +27,11 @@ Blockly.Blocks[SCRIPTAPP_METHODS_SAY_TO_ALL] = {
   init: function () {
     this.jsonInit({
       type: SCRIPTAPP_METHODS_SAY_TO_ALL,
-      message0: 'Say %1 with color %2 to All',
+      message0: 'Say %1 to All',
+      // message0: 'Say %1 with color %2 to All',
       args0: [
         { type: 'input_value', name: 'TEXT', check: 'String' },
-        { type: 'input_value', name: 'COLOR', check: 'Number' },
+        // { type: 'input_value', name: 'COLOR', check: 'Number' },
       ],
       previousStatement: null,
       nextStatement: null,
@@ -39,19 +40,19 @@ Blockly.Blocks[SCRIPTAPP_METHODS_SAY_TO_ALL] = {
   },
 };
 Blockly.JavaScript[SCRIPTAPP_METHODS_SAY_TO_ALL] = function (block) {
-  // console.log(block);
   const text =
     Blockly.JavaScript.valueToCode(
       block,
       'TEXT',
       Blockly.JavaScript.ORDER_NONE,
     ) || "''";
+  return `App.sayToAll(${text});`;
 
-  const color =
-    Blockly.JavaScript.valueToCode(
-      block,
-      'COLOR',
-      Blockly.JavaScript.ORDER_NONE,
-    ) || '0xFFFFFF';
-  return `App.sayToAll(${text}, ${color});`;
+  // const color =
+  //   Blockly.JavaScript.valueToCode(
+  //     block,
+  //     'COLOR',
+  //     Blockly.JavaScript.ORDER_NONE,
+  //   ) || '0xFFFFFF';
+  // return `App.sayToAll(${text}, ${color});`;
 };
