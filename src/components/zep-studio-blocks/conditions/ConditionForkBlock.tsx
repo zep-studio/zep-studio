@@ -1,19 +1,26 @@
 import styled from '@emotion/styled';
 
-import { ZEPStudioIcon } from '../ZEPStudioIcon';
-import { BlockFooter } from './atoms/BlockFooter';
-import { BlockHeader } from './atoms/BlockHeader';
-import { ControlBlockContainer } from './atoms/ControlBlockContainer';
-import { ControlBlockProps } from './types';
+import { BlockFooter } from '../atoms/BlockFooter';
+import { BlockHeader } from '../atoms/BlockHeader';
+import { ControlBlockContainer } from '../atoms/ControlBlockContainer';
+import { ControlBlockProps } from '../types';
 
-type Props = ControlBlockProps & {};
+type Props = ControlBlockProps & {
+  satisfied: boolean;
+};
 
-export const ConditionEndBlock: React.FC<Props> = ({ children }) => {
+export const ConditionForkBlock: React.FC<Props> = ({
+  satisfied,
+  children,
+}) => {
   return (
     <Container>
       <Header>
-        <ZEPStudioIcon icon="icon_action_24" color="white" size={24} />
-        <Title>Condition</Title>
+        {satisfied ? (
+          <Title>If satisfied</Title>
+        ) : (
+          <Title>If not satisfied</Title>
+        )}
       </Header>
       {children}
       <BlockFooter />
@@ -26,7 +33,7 @@ const Container = styled(ControlBlockContainer)`
   min-width: 300px;
 `;
 const Header = styled(BlockHeader)`
-  background: #74c1d9;
+  background: #7e8992;
 
   gap: 16px;
 `;

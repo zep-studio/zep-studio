@@ -2,14 +2,14 @@ import { Box, Flex, Stack } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 
 import Navigation from '../../components/Navigation';
-import { ConditionEndBlock } from '../../components/zep-studio-blocks/ConditionEndBlock';
-import { ConditionForkBlock } from '../../components/zep-studio-blocks/ConditionForkBlock';
-import { ConditionForkList } from '../../components/zep-studio-blocks/ConditionForkList';
-import { ConditionStartBlock } from '../../components/zep-studio-blocks/ConditionStartBlock';
 import { TriggerBlock } from '../../components/zep-studio-blocks/TriggerBlock';
 import { BasicActionBlock } from '../../components/zep-studio-blocks/actions/BasicActionBlock';
 import { RepeatActionBlock } from '../../components/zep-studio-blocks/actions/RepeatActionBlock';
 import { ConditionStatementBlock } from '../../components/zep-studio-blocks/condition-statements/ConditionStatementBlock';
+import { ConditionEndBlock } from '../../components/zep-studio-blocks/conditions/ConditionEndBlock';
+import { ConditionForkBlock } from '../../components/zep-studio-blocks/conditions/ConditionForkBlock';
+import { ConditionForkList } from '../../components/zep-studio-blocks/conditions/ConditionForkList';
+import { ConditionStartBlock } from '../../components/zep-studio-blocks/conditions/ConditionStartBlock';
 
 export const StudioPage: React.FC = () => {
   return (
