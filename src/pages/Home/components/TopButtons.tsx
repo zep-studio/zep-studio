@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 
 import { ZEPStudioIcon } from '../../../components/ZEPStudioIcon';
 
@@ -8,10 +9,17 @@ export const TopButtons: React.FC<Props> = () => {
   return (
     <AbsoluteContainer>
       <ButtonList>
-        <OutlineButton>
+        <OutlineButton
+          onClick={() => {
+            const win = window.open(window.location.origin, '_blank');
+            win?.focus();
+          }}
+        >
           My functions <FunctionCount>3</FunctionCount>
         </OutlineButton>
-        <PrimaryButton>Create my function</PrimaryButton>
+        <Link to="/studio">
+          <PrimaryButton>Create my function</PrimaryButton>
+        </Link>
       </ButtonList>
 
       <ZEPStudioIcon icon="icon_close_24" size={32} color="#262A2E" />
