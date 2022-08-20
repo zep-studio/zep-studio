@@ -7,8 +7,9 @@ import { ZEPStudioIcon } from './ZEPStudioIcon';
 
 const Navigation: React.FC = () => {
   return (
-    <Flex
+    <Container
       h="68px"
+      zIndex="99"
       bg="gray.600"
       color={'white'}
       p={3}
@@ -31,11 +32,18 @@ const Navigation: React.FC = () => {
           <ZEPStudioIcon icon="icon_more_24" size={24} color="#ADB5BD" />
         </SquareButton>
       </Center>
-    </Flex>
+    </Container>
   );
 };
 
 export default Navigation;
+
+const Container = styled(Flex)`
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+`;
 
 const GrayBreadcrumb = styled.span`
   /* subtitle/02 */
