@@ -1,6 +1,6 @@
 import prettierParserBabel from 'prettier/parser-babel';
 import prettier from 'prettier/standalone';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { createElement, useCallback, useMemo, useState } from 'react';
 
 import './BlocklyComponent.css';
 
@@ -65,6 +65,15 @@ const BlocklyComponent: React.FC<BlocklyComponentProps> = (props) => {
         2,
       ),
     );
+
+    // Programmatic Block Creation
+    const workspace = new Blockly.Workspace();
+    workspace.newBlock('scriptapp_lifecycle_on_init');
+    const trigger = workspace.newBlock('scriptapp_event_listeners_on_say');
+    const say1 = workspace.newBlock('scriptapp_methods_say_to_all');
+    trigger.getInput('DO')?.connection.connect(say1.previousConnection);
+
+    console.log(BlocklyJS.workspaceToCode(workspace));
   }, []);
 
   const isInitalizedRef = useRef<boolean>(false);
