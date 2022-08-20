@@ -1,6 +1,6 @@
 import { Box, Flex, Stack } from '@chakra-ui/react';
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import {
@@ -20,6 +20,7 @@ import {
   ActionBlockDraft,
   BlockDraft,
   ConditionBlockDraft,
+  TriggerBlockDraft,
 } from '../../components/zep-studio-blocks/types';
 
 export const StudioPage: React.FC = () => {
@@ -30,6 +31,49 @@ export const StudioPage: React.FC = () => {
       trigger: SCRIPTAPP_LIFECYCLE_ON_INIT,
     },
   ]);
+
+  const calculatedBlocks = useMemo(() => {
+    // return blocks;
+    let _blocks: (
+      | ((TriggerBlockDraft | ActionBlockDraft) & {
+          blocks: ActionBlockDraft[];
+        })
+      | ConditionBlockDraft
+    )[] = [];
+    let prevIndex: number | null = null;
+    for (const block of blocks) {
+      if (block.type === 'trigger') {
+        _blocks.push({ ...block, blocks: [] });
+        prevIndex = _blocks.length - 1;
+      } else if (block.type === 'condition') {
+        _blocks.push(block);
+        prevIndex = _blocks.length - 1;
+      } else if (block.type === 'action') {
+        if (prevIndex !== null) {
+          const prevBlock = _blocks[prevIndex];
+          if (prevBlock.type === 'trigger') {
+            prevBlock.blocks.push(block);
+          } else if (prevBlock.type === 'condition') {
+            console.log(prevBlock.type, block);
+            // NOTE: This will not occur for if/else (inserts here are not made here), but after condition block close(after condition-end)
+            prevBlock.end.push(block);
+
+            // remove duplicates in prevBlock.end using ids
+            prevBlock.end = prevBlock.end.filter(
+              (v, i, a) => a.findIndex((v2) => v2.id === v.id) === i,
+            );
+
+            prevIndex = _blocks.length - 1;
+          }
+        }
+      } else {
+        console.log(block);
+      }
+    }
+    return _blocks;
+  }, [blocks]);
+
+  console.log(calculatedBlocks, blocks);
 
   return (
     <main>
@@ -45,7 +89,7 @@ export const StudioPage: React.FC = () => {
             bg={'gray.200'}
           >
             <BlockList>
-              {blocks.map((item, index) => {
+              {calculatedBlocks.map((item, index) => {
                 const setBlock = (block: Partial<BlockDraft>) => {
                   const newBlocks = [...blocks];
                   newBlocks[index] = {
@@ -57,7 +101,9 @@ export const StudioPage: React.FC = () => {
 
                 const onAddNewBlock = (
                   blockType: string,
-                  position: [string, 'if' | 'else'] | 'below',
+                  position:
+                    | ['location', string, 'if' | 'else']
+                    | ['below', string],
                 ) => {
                   let newBlock: BlockDraft | null = null;
                   if (blockType === 'condition') {
@@ -67,6 +113,7 @@ export const StudioPage: React.FC = () => {
                       type: 'condition',
                       if: [],
                       else: [],
+                      end: [],
                     } as ConditionBlockDraft;
                   } else if (blockType === SCRIPTAPP_METHODS_SAY_TO_ALL) {
                     newBlock = {
@@ -79,11 +126,33 @@ export const StudioPage: React.FC = () => {
                     return;
                   }
 
-                  if (position === 'below') {
-                    setBlocks((prev) => [...prev, newBlock as BlockDraft]);
+                  if (position[0] === 'below') {
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                    const [_, blockId] = position;
+                    // place block under block with id blockId
+                    const newBlocks = [...blocks];
+
+                    // blockindex should be the largest number, greater than indexOf(block.id === blockId) and before the next block.type !== 'condition'
+                    let blockIndex = 0;
+                    for (let i = 0; i < newBlocks.length; i++) {
+                      if (newBlocks[i].id === blockId) {
+                        blockIndex = i;
+                        break;
+                      }
+                    }
+                    for (let i = blockIndex + 1; i < newBlocks.length; i++) {
+                      if (newBlocks[i].type !== 'condition') {
+                        blockIndex = i;
+                        break;
+                      }
+                    }
+                    newBlocks.splice(blockIndex + 1, 0, newBlock);
+                    setBlocks(newBlocks);
                   } else {
                     // position is [block id, 'if' | 'else']
-                    const [blockId, positionType] = position as [
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                    const [_, blockId, positionType] = position as [
+                      'location',
                       string,
                       'if' | 'else',
                     ];
@@ -113,10 +182,19 @@ export const StudioPage: React.FC = () => {
                   return (
                     <TriggerBlock
                       key={item.id}
+                      blockId={item.id}
                       trigger={item.trigger}
                       setBlock={setBlock}
                       onAddNewBlock={onAddNewBlock}
-                    />
+                    >
+                      {item.blocks.map((block) => (
+                        <BasicActionBlock
+                          key={block.id}
+                          // blockId={block.id}
+                          action={block.action}
+                        />
+                      ))}
+                    </TriggerBlock>
                   );
                 }
 
@@ -124,39 +202,84 @@ export const StudioPage: React.FC = () => {
                   return (
                     <React.Fragment key={item.id}>
                       <StrightArrow />
-                      <ConditionStartBlock onAddNewBlock={onAddNewBlock}>
+                      <ConditionStartBlock
+                        blockId={item.id}
+                        onAddNewBlock={onAddNewBlock}
+                      >
                         {/* <ConditionStatementBlock />
                         <ConditionStatementBlock isLastItem /> */}
                       </ConditionStartBlock>
 
                       <ConditionForkList>
                         <ConditionForkBlock
+                          blockId={item.id}
                           satisfied
                           onAddNewBlock={onAddNewBlock}
                         >
+                          {item.if.map((block) => {
+                            if (block.type === 'condition') {
+                              return null;
+                            }
+                            if (block.type === 'action') {
+                              return (
+                                <BasicActionBlock
+                                  key={block.id}
+                                  // blockId={block.id}
+                                  action={block.action}
+                                />
+                              );
+                            }
+                            return null;
+                          })}
                           {/* <BasicActionBlock /> */}
                         </ConditionForkBlock>
                         <ConditionForkBlock
+                          blockId={item.id}
                           satisfied={false}
                           onAddNewBlock={onAddNewBlock}
                         >
-                          {/* <RepeatActionBlock>
-                            <BasicActionBlock />
-                            <BasicActionBlock />
-                          </RepeatActionBlock> */}
+                          {item.else.map((block) => {
+                            if (block.type === 'condition') {
+                              return null;
+                            }
+                            if (block.type === 'action') {
+                              return (
+                                <BasicActionBlock
+                                  key={block.id}
+                                  // blockId={block.id}
+                                  action={block.action}
+                                />
+                              );
+                            }
+                            return null;
+                          })}
                         </ConditionForkBlock>
                       </ConditionForkList>
 
-                      <ConditionEndBlock onAddNewBlock={onAddNewBlock} />
+                      <ConditionEndBlock
+                        blockId={item.id}
+                        onAddNewBlock={onAddNewBlock}
+                      >
+                        {item.end.map((block) => {
+                          if (block.type === 'condition') {
+                            return null;
+                          }
+                          if (block.type === 'action') {
+                            return (
+                              <BasicActionBlock
+                                key={block.id}
+                                // blockId={block.id}
+                                action={block.action}
+                              />
+                            );
+                          }
+                          return null;
+                        })}
+                      </ConditionEndBlock>
                     </React.Fragment>
                   );
                 }
 
-                if (item.type === 'action') {
-                  return (
-                    <BasicActionBlock key={item.id} action={item.action} />
-                  );
-                }
                 return null;
               })}
             </BlockList>

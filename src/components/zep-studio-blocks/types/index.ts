@@ -13,6 +13,7 @@ export type ConditionBlockDraft = {
   type: 'condition';
   if: (ConditionBlockDraft | ActionBlockDraft)[];
   else: (ConditionBlockDraft | ActionBlockDraft)[];
+  end: (ConditionBlockDraft | ActionBlockDraft)[];
 };
 
 export type ActionBlockDraft = {

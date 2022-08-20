@@ -6,14 +6,16 @@ import { ControlBlockContainer } from '../atoms/ControlBlockContainer';
 import { ControlBlockProps } from '../types';
 
 type Props = ControlBlockProps & {
+  blockId: string;
   satisfied: boolean;
   onAddNewBlock: (
     blockType: string,
-    position: [string, 'if' | 'else'] | 'below',
+    position: ['location', string, 'if' | 'else'] | ['below', string],
   ) => void;
 };
 
 export const ConditionForkBlock: React.FC<Props> = ({
+  blockId,
   satisfied,
   children,
   onAddNewBlock,
@@ -29,7 +31,8 @@ export const ConditionForkBlock: React.FC<Props> = ({
       </Header>
       {children}
       <BlockFooter
-        parentBlockType="condition-fork"
+        parentBlockId={blockId}
+        parentBlockType={`condition-fork-${satisfied ? 'if' : 'else'}`}
         onAddNewBlock={onAddNewBlock}
       />
     </Container>

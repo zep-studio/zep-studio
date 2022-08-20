@@ -32,15 +32,17 @@ const TRIGGERS = [
 ];
 
 type Props = ControlBlockProps & {
+  blockId: string;
   trigger: string | undefined;
   setBlock: (block: Partial<TriggerBlockDraft>) => void;
   onAddNewBlock: (
     blockType: string,
-    position: [string, 'if' | 'else'] | 'below',
+    position: ['location', string, 'if' | 'else'] | ['below', string],
   ) => void;
 };
 
 export const TriggerBlock: React.FC<Props> = ({
+  blockId,
   children,
   trigger,
   setBlock,
@@ -100,7 +102,11 @@ export const TriggerBlock: React.FC<Props> = ({
         <Title>happens</Title>
       </Header>
       {children}
-      <BlockFooter parentBlockType="trigger" onAddNewBlock={onAddNewBlock} />
+      <BlockFooter
+        parentBlockId={blockId}
+        parentBlockType="trigger"
+        onAddNewBlock={onAddNewBlock}
+      />
     </Container>
   );
 };

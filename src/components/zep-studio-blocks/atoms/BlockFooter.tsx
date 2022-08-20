@@ -19,19 +19,26 @@ const NEW_BLOCKS = [
     title: 'Say to all',
     value: SCRIPTAPP_METHODS_SAY_TO_ALL,
     description: 'Displays text in the chat window',
-    allowedParentBlockType: ['trigger', 'condition-fork', 'condition-end'],
+    allowedParentBlockType: [
+      'trigger',
+      'condition-fork-if',
+      'condition-fork-else',
+      'condition-end',
+    ],
   },
 ];
 
 type Props = {
+  parentBlockId: string;
   parentBlockType: string;
   onAddNewBlock: (
     blockType: string,
-    position: [string, 'if' | 'else'] | 'below',
+    position: ['location', string, 'if' | 'else'] | ['below', string],
   ) => void;
 };
 
 export const BlockFooter: React.FC<Props> = ({
+  parentBlockId,
   parentBlockType,
   onAddNewBlock,
 }) => {
@@ -66,7 +73,13 @@ export const BlockFooter: React.FC<Props> = ({
             )}
             style={{ top: 48 + 8, left: 'unset', right: 82 }}
             onSelect={(value) => {
-              onAddNewBlock?.(value, 'below');
+              if (parentBlockType === 'condition-fork-if') {
+                onAddNewBlock(value, ['location', parentBlockId, 'if']);
+              } else if (parentBlockType === 'condition-fork-else') {
+                onAddNewBlock(value, ['location', parentBlockId, 'else']);
+              } else {
+                onAddNewBlock(value, ['below', parentBlockId]);
+              }
               cleanupRef.current = raiseAncestorControlBlock(centerRef.current);
 
               setSelectorOpen((prev) => !prev);
