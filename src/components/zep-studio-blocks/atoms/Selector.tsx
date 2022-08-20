@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { motion } from 'framer-motion';
 
 export type SelectItem = {
   title: string;
@@ -13,7 +14,12 @@ type Props = {
 
 export const Selector: React.FC<Props> = ({ type = 'primary', items = [] }) => {
   return (
-    <Container>
+    <Container
+      initial={{ opacity: 0, transform: 'translateY(8px)' }}
+      animate={{ opacity: 1, transform: 'translateY(0px)' }}
+      exit={{ opacity: 0, transform: 'translateY(-8px)' }}
+      transition={{ duration: 0.2, ease: 'easeInOut' }}
+    >
       {items.map((item) => (
         <SelectItemContainer key={item.value}>
           <SelectItemName>
@@ -33,7 +39,7 @@ export const Selector: React.FC<Props> = ({ type = 'primary', items = [] }) => {
   );
 };
 
-const Container = styled.div`
+const Container = styled(motion.div)`
   /* Group 325 */
 
   position: absolute;

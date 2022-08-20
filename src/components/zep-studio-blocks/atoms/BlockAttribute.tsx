@@ -1,6 +1,9 @@
 import styled from '@emotion/styled';
 
-export const BlockAttribute = styled.span`
+type BlockAttributeProps = {
+  $isSelectorOpen?: boolean;
+};
+export const BlockAttribute = styled.span<BlockAttributeProps>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,4 +29,7 @@ export const BlockAttribute = styled.span`
   /* gray/04 */
 
   color: #7e8992;
+
+  cursor: pointer;
+  user-select: none;
 `;
