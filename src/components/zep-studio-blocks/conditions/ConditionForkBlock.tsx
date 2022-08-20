@@ -7,11 +7,13 @@ import { ControlBlockProps } from '../types';
 
 type Props = ControlBlockProps & {
   satisfied: boolean;
+  onAddNewBlock: (blockType: string) => void;
 };
 
 export const ConditionForkBlock: React.FC<Props> = ({
   satisfied,
   children,
+  onAddNewBlock,
 }) => {
   return (
     <Container>
@@ -23,7 +25,10 @@ export const ConditionForkBlock: React.FC<Props> = ({
         )}
       </Header>
       {children}
-      <BlockFooter />
+      <BlockFooter
+        parentBlockType="condition-fork"
+        onAddNewBlock={onAddNewBlock}
+      />
     </Container>
   );
 };
@@ -31,6 +36,7 @@ export const ConditionForkBlock: React.FC<Props> = ({
 const Container = styled(ControlBlockContainer)`
   width: fit-content;
   min-width: 300px;
+  min-height: 200px;
 `;
 const Header = styled(BlockHeader)`
   background: #7e8992;

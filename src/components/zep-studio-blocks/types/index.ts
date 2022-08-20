@@ -13,9 +13,16 @@ export type ConditionBlockDraft = {
   type: 'condition';
 };
 
+export type ActionBlockDraft = {
+  id: string;
+  type: 'action';
+  action: string;
+};
+
 export type BlockDraft =
   | TriggerBlockDraft
   | ConditionBlockDraft
+  | ActionBlockDraft
   | {
       id: string;
       type: '';

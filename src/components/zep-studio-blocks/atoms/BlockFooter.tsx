@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
 import { useRef, useState } from 'react';
 
+import { SCRIPTAPP_METHODS_SAY_TO_ALL } from '../../../blocks/scriptapp';
 import { ZEPStudioIcon } from '../../ZEPStudioIcon';
 import { raiseAncestorControlBlock } from './ControlBlockContainer';
 import { Selector, SelectorWrapper } from './Selector';
@@ -14,11 +15,17 @@ const NEW_BLOCKS = [
     description: 'Add a new if/else condition',
     allowedParentBlockType: ['trigger', 'condition-end'],
   },
+  {
+    title: 'Say to all',
+    value: SCRIPTAPP_METHODS_SAY_TO_ALL,
+    description: 'Displays text in the chat window',
+    allowedParentBlockType: ['trigger', 'condition-fork', 'condition-end'],
+  },
 ];
 
 type Props = {
-  parentBlockType?: string;
-  onAddNewBlock?: (blockType: string) => void;
+  parentBlockType: string;
+  onAddNewBlock: (blockType: string) => void;
 };
 
 export const BlockFooter: React.FC<Props> = ({
@@ -82,6 +89,7 @@ const Container = styled.button`
   align-items: center;
   padding: 12px 28px;
   gap: 10px;
+  user-select: none;
 
   /* gray/00 */
 

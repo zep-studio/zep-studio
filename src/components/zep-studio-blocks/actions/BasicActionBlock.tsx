@@ -9,9 +9,11 @@ import { BlockRemoveButton } from '../atoms/BlockRemoveButton';
 import { raiseAncestorControlBlock } from '../atoms/ControlBlockContainer';
 import { Selector, SelectorWrapper } from '../atoms/Selector';
 
-type Props = {};
+type Props = {
+  action: string;
+};
 
-export const BasicActionBlock: React.FC<Props> = () => {
+export const BasicActionBlock: React.FC<Props> = ({ action }) => {
   const [isActionSelectorOpen, setActionSelectorOpen] =
     useState<boolean>(false);
   const [isVariableSelectorOpen, setVariableSelectorOpen] =

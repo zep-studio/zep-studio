@@ -2,7 +2,10 @@ import { Box, Flex, Stack } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
 
-import { SCRIPTAPP_LIFECYCLE_ON_INIT } from '../../blocks/scriptapp';
+import {
+  SCRIPTAPP_LIFECYCLE_ON_INIT,
+  SCRIPTAPP_METHODS_SAY_TO_ALL,
+} from '../../blocks/scriptapp';
 import Navigation from '../../components/Navigation';
 import { TriggerBlock } from '../../components/zep-studio-blocks/TriggerBlock';
 import { BasicActionBlock } from '../../components/zep-studio-blocks/actions/BasicActionBlock';
@@ -13,6 +16,7 @@ import { ConditionForkBlock } from '../../components/zep-studio-blocks/condition
 import { ConditionForkList } from '../../components/zep-studio-blocks/conditions/ConditionForkList';
 import { ConditionStartBlock } from '../../components/zep-studio-blocks/conditions/ConditionStartBlock';
 import {
+  ActionBlockDraft,
   BlockDraft,
   ConditionBlockDraft,
 } from '../../components/zep-studio-blocks/types';
@@ -58,6 +62,13 @@ export const StudioPage: React.FC = () => {
                       id: `${index}-condition-start`,
                       type: 'condition',
                     } as ConditionBlockDraft;
+                  } else if (blockType === SCRIPTAPP_METHODS_SAY_TO_ALL) {
+                    newBlock = {
+                      // TODO: Randomize ID,
+                      id: `${index}-say-to-all`,
+                      type: 'action',
+                      action: SCRIPTAPP_METHODS_SAY_TO_ALL,
+                    } as ActionBlockDraft;
                   }
                   if (!newBlock) {
                     return;
@@ -80,16 +91,22 @@ export const StudioPage: React.FC = () => {
                   return (
                     <React.Fragment key={item.id}>
                       <StrightArrow />
-                      <ConditionStartBlock>
+                      <ConditionStartBlock onAddNewBlock={onAddNewBlock}>
                         {/* <ConditionStatementBlock />
                         <ConditionStatementBlock isLastItem /> */}
                       </ConditionStartBlock>
 
                       <ConditionForkList>
-                        <ConditionForkBlock satisfied>
+                        <ConditionForkBlock
+                          satisfied
+                          onAddNewBlock={onAddNewBlock}
+                        >
                           {/* <BasicActionBlock /> */}
                         </ConditionForkBlock>
-                        <ConditionForkBlock satisfied={false}>
+                        <ConditionForkBlock
+                          satisfied={false}
+                          onAddNewBlock={onAddNewBlock}
+                        >
                           {/* <RepeatActionBlock>
                             <BasicActionBlock />
                             <BasicActionBlock />
@@ -99,6 +116,12 @@ export const StudioPage: React.FC = () => {
 
                       <ConditionEndBlock onAddNewBlock={onAddNewBlock} />
                     </React.Fragment>
+                  );
+                }
+
+                if (item.type === 'action') {
+                  return (
+                    <BasicActionBlock key={item.id} action={item.action} />
                   );
                 }
                 return null;
