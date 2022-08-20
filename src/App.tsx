@@ -3,14 +3,14 @@ import './App.css';
 
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
-import BlocklyExample from './Blockly';
+import BlocklyExamplePage from './Blockly/BlocklyExamplePage';
 import Home from './Home';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/blockly" element={<BlocklyExample />}></Route>
+        <Route path="/blockly" element={<BlocklyExamplePage />}></Route>
         <Route path="/" element={<Home />}></Route>
       </Routes>
     </Router>
