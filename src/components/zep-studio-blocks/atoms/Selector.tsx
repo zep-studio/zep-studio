@@ -17,11 +17,13 @@ export const SelectorWrapper = styled.div`
 type Props = HTMLMotionProps<'div'> & {
   type?: 'primary' | 'secondary';
   items?: SelectItem[];
+  onSelect?: (value: string) => void;
 };
 
 export const Selector: React.FC<Props> = ({
   type = 'primary',
   items = [],
+  onSelect,
   ...props
 }) => {
   return (
@@ -33,7 +35,10 @@ export const Selector: React.FC<Props> = ({
       {...props}
     >
       {items.map((item) => (
-        <SelectItemContainer key={item.value}>
+        <SelectItemContainer
+          key={item.value}
+          onClick={() => onSelect?.(item.value)}
+        >
           <SelectItemName>
             <span
               className={type === 'primary' ? 'circle-purple' : 'circle-blue'}

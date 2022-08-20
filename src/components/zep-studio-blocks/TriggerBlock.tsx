@@ -1,8 +1,12 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 
+import {
+  SCRIPTAPP_EVENT_LISTENERS_ON_SAY,
+  SCRIPTAPP_LIFECYCLE_ON_INIT,
+} from '../../blocks/scriptapp';
 import { ZEPStudioIcon } from '../ZEPStudioIcon';
 import { BlockAttribute } from './atoms/BlockAttribute';
 import { BlockFooter } from './atoms/BlockFooter';
@@ -12,14 +16,41 @@ import {
   raiseAncestorControlBlock,
 } from './atoms/ControlBlockContainer';
 import { Selector, SelectorWrapper } from './atoms/Selector';
-import { ControlBlockProps } from './types';
+import { ControlBlockProps, TriggerBlockDraft } from './types';
 
-type Props = ControlBlockProps & {};
+const TRIGGERS = [
+  {
+    title: 'When app is initialized',
+    value: SCRIPTAPP_LIFECYCLE_ON_INIT,
+    description: 'Called once when running the app the first time',
+  },
+  {
+    title: 'When someone says something',
+    value: SCRIPTAPP_EVENT_LISTENERS_ON_SAY,
+    description: 'When a player says something in the default chat UI',
+  },
+];
 
-export const TriggerBlock: React.FC<Props> = ({ children }) => {
+type Props = ControlBlockProps & {
+  trigger: string | undefined;
+  setBlock: (block: Partial<TriggerBlockDraft>) => void;
+};
+
+export const TriggerBlock: React.FC<Props> = ({
+  children,
+  trigger,
+  setBlock,
+}) => {
   const [isTriggerSelectorOpen, setTriggerSelectorOpen] =
     useState<boolean>(false);
   const cleanupRef = useRef<any>(null);
+
+  const triggerDisplayName = useMemo(() => {
+    if (!trigger) {
+      return null;
+    }
+    return TRIGGERS.find((v) => v.value === trigger)?.title ?? null;
+  }, [trigger]);
 
   return (
     <Container>
@@ -40,17 +71,22 @@ export const TriggerBlock: React.FC<Props> = ({ children }) => {
               });
             }}
           >
-            When someone says something
+            {triggerDisplayName || 'Select...'}
           </TriggerIntent>
           <AnimatePresence>
             {isTriggerSelectorOpen && (
               <Selector
-                items={Array.from({ length: 10 }, (_, i) => ({
-                  title: 'Touch location',
-                  value: 'Touch',
-                  description:
-                    "When a player arrives in the specified 'specified area'",
-                }))}
+                items={TRIGGERS}
+                onSelect={(trigger) => {
+                  setBlock({ trigger } as TriggerBlockDraft);
+
+                  setTriggerSelectorOpen((prev) => !prev);
+                  setTimeout(() => {
+                    if (isTriggerSelectorOpen) {
+                      setTimeout(() => cleanupRef.current?.(), 200);
+                    }
+                  });
+                }}
               />
             )}
           </AnimatePresence>

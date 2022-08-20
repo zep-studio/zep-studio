@@ -1,6 +1,8 @@
 import { Box, Flex, Stack } from '@chakra-ui/react';
 import styled from '@emotion/styled';
+import { useState } from 'react';
 
+import { SCRIPTAPP_LIFECYCLE_ON_INIT } from '../../blocks/scriptapp';
 import Navigation from '../../components/Navigation';
 import { TriggerBlock } from '../../components/zep-studio-blocks/TriggerBlock';
 import { BasicActionBlock } from '../../components/zep-studio-blocks/actions/BasicActionBlock';
@@ -10,8 +12,17 @@ import { ConditionEndBlock } from '../../components/zep-studio-blocks/conditions
 import { ConditionForkBlock } from '../../components/zep-studio-blocks/conditions/ConditionForkBlock';
 import { ConditionForkList } from '../../components/zep-studio-blocks/conditions/ConditionForkList';
 import { ConditionStartBlock } from '../../components/zep-studio-blocks/conditions/ConditionStartBlock';
+import { BlockDraft } from '../../components/zep-studio-blocks/types';
 
 export const StudioPage: React.FC = () => {
+  const [blocks, setBlocks] = useState<BlockDraft[]>([
+    {
+      id: 'genesis',
+      type: 'trigger',
+      trigger: SCRIPTAPP_LIFECYCLE_ON_INIT,
+    },
+  ]);
+
   return (
     <main>
       <Navigation />
@@ -19,7 +30,28 @@ export const StudioPage: React.FC = () => {
         <Flex h="100vh">
           <Stack w="full" h="150vh" padding="54px" bg={'gray.200'}>
             <BlockList>
-              <TriggerBlock />
+              {blocks.map((item, index) => {
+                const setBlock = (block: Partial<BlockDraft>) => {
+                  const newBlocks = [...blocks];
+                  newBlocks[index] = {
+                    ...newBlocks[index],
+                    ...block,
+                  } as BlockDraft;
+                  setBlocks(newBlocks);
+                };
+
+                if (item.type === 'trigger') {
+                  return (
+                    <TriggerBlock
+                      key={item.id}
+                      trigger={item.trigger}
+                      setBlock={setBlock}
+                    />
+                  );
+                }
+                return null;
+              })}
+              {/* <TriggerBlock />
               <StrightArrow />
               <ConditionStartBlock>
                 <ConditionStatementBlock />
@@ -38,7 +70,7 @@ export const StudioPage: React.FC = () => {
                 </ConditionForkBlock>
               </ConditionForkList>
 
-              <ConditionEndBlock />
+              <ConditionEndBlock /> */}
             </BlockList>
           </Stack>
           <Stack
