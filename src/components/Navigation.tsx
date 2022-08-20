@@ -1,11 +1,13 @@
 import { Center, Flex } from '@chakra-ui/react';
 import styled from '@emotion/styled';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { ZEPStudioBadge } from './ZEPStudioBadge';
 import { ZEPStudioIcon } from './ZEPStudioIcon';
 
 const Navigation: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <Container
       h="68px"
@@ -16,7 +18,12 @@ const Navigation: React.FC = () => {
       justify={'space-between'}
     >
       <Center gap="12px">
-        <ZEPStudioIcon icon="icon_prev_32" size={32} color="#adb5bd" />
+        <ZEPStudioIcon
+          icon="icon_prev_32"
+          size={32}
+          color="#adb5bd"
+          onClick={() => navigate(-1)}
+        />
         <GrayBreadcrumb>
           <Link to="/">ZEP studio</Link>
         </GrayBreadcrumb>
