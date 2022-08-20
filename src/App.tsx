@@ -20,8 +20,17 @@ function App() {
         <Navigation />
         <Box>
           <Flex h="100vh">
-            <Stack w="390px" h="full" spacing={10} alignItems="flex-start">
-              <Text>My Blocks</Text>
+            <Stack
+              w="390px"
+              h="full"
+              spacing={10}
+              alignItems="flex-start"
+              p={5}
+            >
+              <Text color={'main.100'} fontWeight={'bold'} fontSize={'24px'}>
+                My Blocks
+              </Text>
+              <hr />
             </Stack>
             <Stack
               w="full"
