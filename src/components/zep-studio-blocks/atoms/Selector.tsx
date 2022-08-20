@@ -37,6 +37,9 @@ const Container = styled.div`
   /* Group 325 */
 
   position: absolute;
+  left: 0;
+  top: ${43 + 8}px;
+
   z-index: 99;
 
   width: 395px;
@@ -53,7 +56,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
 
-  padding: 32px 12px 0px 28px;
+  padding: ${36 - 14.5}px 12px 0px 28px;
   gap: 10px;
 
   position: absolute;
@@ -120,5 +123,5 @@ const SelectItemDescription = styled.span`
 
 const BottomSpacer = styled.div`
   width: 100%;
-  height: 36px;
+  height: ${36 - 14.5}px;
 `;

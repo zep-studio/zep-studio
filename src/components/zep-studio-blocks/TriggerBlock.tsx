@@ -15,15 +15,19 @@ export const TriggerBlock: React.FC<Props> = ({ children }) => {
       <Header>
         <ZEPStudioIcon icon="icon_trigger_24" color="white" size={24} />
         <Title>When the trigger</Title>
-        <TriggerIntent>When someone says something</TriggerIntent>
-        <Selector
-          items={Array.from({ length: 10 }, (_, i) => ({
-            title: 'Touch location',
-            value: 'Touch',
-            description:
-              "When a player arrives in the specified 'specified area'",
-          }))}
-        />
+
+        <TriggerIntentWrapper>
+          <TriggerIntent>When someone says something</TriggerIntent>
+          <Selector
+            items={Array.from({ length: 10 }, (_, i) => ({
+              title: 'Touch location',
+              value: 'Touch',
+              description:
+                "When a player arrives in the specified 'specified area'",
+            }))}
+          />
+        </TriggerIntentWrapper>
+
         <Title>happens</Title>
       </Header>
       {children}
@@ -58,6 +62,12 @@ const Title = styled.span`
   color: #ffffff;
 `;
 
+const TriggerIntentWrapper = styled.div`
+  position: relative;
+  display: flex;
+
+  position: relative;
+`;
 const TriggerIntent = styled(BlockAttribute)`
   padding: 12px;
   padding-left: 16px;
