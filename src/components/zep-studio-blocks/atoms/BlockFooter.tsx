@@ -8,7 +8,7 @@ type Props = {};
 export const BlockFooter: React.FC<Props> = () => {
   return (
     <Container>
-      <Center>
+      <Center gap="8px">
         <ZEPStudioIcon icon="icon_plus_24" size={24} />
         <ButtonTitle>Create a new block</ButtonTitle>
       </Center>
