@@ -1,50 +1,19 @@
 import '@chakra-ui/react';
 import './App.css';
 
-import {
-  Box,
-  Button,
-  Center,
-  Flex,
-  Stack,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
-import Navigation from './Navigation';
+import BlocklyExample from './Blockly';
+import Home from './Home';
 
 function App() {
   return (
-    <div className="App">
-      <main>
-        <Navigation />
-        <Box>
-          <Flex h="100vh">
-            <Stack w="390px" h="full" spacing={10} alignItems="flex-start">
-              <Text>My Blocks</Text>
-            </Stack>
-            <Stack
-              w="full"
-              h="full"
-              spacing={10}
-              alignItems="flex-start"
-              bg={'gray.200'}
-            >
-              <Text>2</Text>
-            </Stack>
-            <Stack
-              w="420px"
-              h="full"
-              spacing={10}
-              alignItems="flex-start"
-              bg={'gray.600'}
-            >
-              <Text>3</Text>
-            </Stack>
-          </Flex>
-        </Box>
-      </main>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/blockly" element={<BlocklyExample />}></Route>
+        <Route path="/" element={<Home />}></Route>
+      </Routes>
+    </Router>
   );
 }
 
