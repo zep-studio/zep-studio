@@ -23,6 +23,7 @@ export const SectionTitle: React.FC<Props> = ({ children, count }) => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 7px;
 `;
 
 const SubtitleRow = styled.div`

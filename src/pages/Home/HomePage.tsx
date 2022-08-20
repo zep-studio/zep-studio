@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
 
+import { BadgeList } from './components/BadgeList';
+import { FunctionCard } from './components/FunctionCard';
 import { SectionTitle } from './components/SectionTitle';
 
 const BADGES = [
@@ -12,16 +14,35 @@ const BADGES = [
   'Etc',
 ];
 
+const FUNCTION_CARDS = [
+  { imageURL: '/assets/functions/function-thumbnail-01.png' },
+  { imageURL: '/assets/functions/function-thumbnail-02.png' },
+  { imageURL: '/assets/functions/function-thumbnail-03.png' },
+  { imageURL: '/assets/functions/function-thumbnail-04.png' },
+  { imageURL: '/assets/functions/function-thumbnail-05.png' },
+  { imageURL: '/assets/functions/function-thumbnail-06.png' },
+];
+
 export const HomePage: React.FC = () => {
   return (
     <Wrapper>
       <Container>
-        <Information>
-          <Title>ZEP studio</Title>
-          <Description>Create your own world easily!</Description>
-
+        <Header>
+          <Information>
+            <TitleJustForSEO>ZEP studio</TitleJustForSEO>
+            <TitleTypography src="/assets/brands/zep-studio-typography.svg" />
+            <Description>Create your own world easily!</Description>
+          </Information>
           <SectionTitle count={24}>Recommended functions</SectionTitle>
-        </Information>
+        </Header>
+
+        <BadgeList badges={BADGES} />
+
+        <CardList>
+          {FUNCTION_CARDS.map((item) => (
+            <FunctionCard key={item.imageURL} {...item} />
+          ))}
+        </CardList>
       </Container>
     </Wrapper>
   );
@@ -50,30 +71,31 @@ const Container = styled.main`
 
   box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 const Information = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 12px;
 `;
 
-const Title = styled.h1`
-  margin: 0;
-
-  /* subtitle/01 */
-
-  font-family: 'Pretendard';
-  font-style: normal;
-  font-weight: 500;
-  font-size: 34px;
-  line-height: 41px;
-  /* identical to box height */
-
-  letter-spacing: 0.0025em;
-
-  /* gray/05 */
-
-  color: #212529;
+const Header = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
 `;
+
+const TitleJustForSEO = styled.h1`
+  display: none;
+`;
+const TitleTypography = styled.img`
+  width: 224.21px;
+  height: 40px;
+`;
+
 const Description = styled.p`
   /* body/01 */
 
@@ -87,4 +109,15 @@ const Description = styled.p`
   /* gray/04 */
 
   color: #7e8992;
+`;
+
+const CardList = styled.ul`
+  margin-top: 32px;
+  width: 100%;
+  list-style-type: none;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  row-gap: 36px;
 `;
