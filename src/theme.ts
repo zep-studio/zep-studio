@@ -1,6 +1,13 @@
 import { extendTheme } from '@chakra-ui/react';
 
+export const systemFontStack =
+  '"Pretendard", "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif';
+
 export const theme = extendTheme({
+  fonts: {
+    heading: systemFontStack,
+    body: systemFontStack,
+  },
   colors: {
     nav: {
       dark: '#35343C',
