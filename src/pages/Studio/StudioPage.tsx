@@ -128,14 +128,34 @@ export const StudioPage: React.FC = () => {
             </BlockList>
           </Stack>
           <Stack
-            w="25vw"
+            w="30vw"
             h="150vh"
             position="relative"
             spacing={10}
             alignItems="flex-start"
             bg={'gray.600'}
           >
-            <Stack w="full" h="100vh" position="sticky" top="0"></Stack>
+            <Stack w="100%" h="60vh">
+              <iframe
+                title="zep-preview"
+                src="https://zep.us/play/8lPg0e"
+                height={'100%'}
+              ></iframe>
+            </Stack>
+            <Stack p={2}>
+              <code style={{ color: '#fff' }}>
+                {`
+                  var player, text;
+
+                  App.onInit.Add(function () {});
+                  App.onSay.Add(function (player, text) {
+                    for (var count = 0; count < 10; count++) {
+                      App.sayToAll(text);
+                    }
+                  });
+                `}
+              </code>
+            </Stack>
           </Stack>
         </Flex>
       </Box>
