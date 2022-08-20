@@ -6,6 +6,8 @@ export const BlockAttribute = styled.span`
   align-items: center;
 
   padding: 12px 30px 12px 16px;
+  width: fit-content;
+  height: 43px;
   gap: 10px;
 
   /* gray/01 */

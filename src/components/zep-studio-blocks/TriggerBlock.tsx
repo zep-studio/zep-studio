@@ -4,10 +4,11 @@ import { ZEPStudioIcon } from '../ZEPStudioIcon';
 import { BlockAttribute } from './atoms/BlockAttribute';
 import { BlockFooter } from './atoms/BlockFooter';
 import { BlockHeader } from './atoms/BlockHeader';
+import { ControlBlockProps } from './types';
 
-type Props = {};
+type Props = ControlBlockProps & {};
 
-export const TriggerBlock: React.FC<Props> = () => {
+export const TriggerBlock: React.FC<Props> = ({ children }) => {
   return (
     <Container>
       <Header>
@@ -16,6 +17,7 @@ export const TriggerBlock: React.FC<Props> = () => {
         <TriggerIntent>When someone says something</TriggerIntent>
         <Title>happens</Title>
       </Header>
+      {children}
       <BlockFooter />
     </Container>
   );

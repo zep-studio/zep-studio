@@ -2,12 +2,16 @@ import styled from '@emotion/styled';
 
 import { BlockFooter } from './atoms/BlockFooter';
 import { BlockHeader } from './atoms/BlockHeader';
+import { ControlBlockProps } from './types';
 
-type Props = {
+type Props = ControlBlockProps & {
   satisfied: boolean;
 };
 
-export const ConditionForkBlock: React.FC<Props> = ({ satisfied }) => {
+export const ConditionForkBlock: React.FC<Props> = ({
+  satisfied,
+  children,
+}) => {
   return (
     <Container>
       <Header>
@@ -17,13 +21,15 @@ export const ConditionForkBlock: React.FC<Props> = ({ satisfied }) => {
           <Title>If not satisfied</Title>
         )}
       </Header>
+      {children}
       <BlockFooter />
     </Container>
   );
 };
 
 const Container = styled.div`
-  width: 300px;
+  width: fit-content;
+  min-width: 300px;
 `;
 const Header = styled(BlockHeader)`
   background: #7e8992;
