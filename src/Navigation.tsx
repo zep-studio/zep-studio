@@ -2,7 +2,7 @@ import { Center, Flex } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
-function Navigation() {
+const Navigation: React.FC = () => {
   return (
     <Flex h="68px" bg="#262A2E" color={'white'} p={3} justify={'space-between'}>
       <Center gap="12px">
@@ -15,7 +15,7 @@ function Navigation() {
       </Center>
     </Flex>
   );
-}
+};
 
 export default Navigation;
 
