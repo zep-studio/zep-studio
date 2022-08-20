@@ -4,6 +4,7 @@ import { ZEPStudioIcon } from '../ZEPStudioIcon';
 import { BlockAttribute } from './atoms/BlockAttribute';
 import { BlockFooter } from './atoms/BlockFooter';
 import { BlockHeader } from './atoms/BlockHeader';
+import { Selector } from './atoms/Selector';
 import { ControlBlockProps } from './types';
 
 type Props = ControlBlockProps & {};
@@ -15,6 +16,14 @@ export const TriggerBlock: React.FC<Props> = ({ children }) => {
         <ZEPStudioIcon icon="icon_trigger_24" color="white" size={24} />
         <Title>When the trigger</Title>
         <TriggerIntent>When someone says something</TriggerIntent>
+        <Selector
+          items={Array.from({ length: 10 }, (_, i) => ({
+            title: 'Touch location',
+            value: 'Touch',
+            description:
+              "When a player arrives in the specified 'specified area'",
+          }))}
+        />
         <Title>happens</Title>
       </Header>
       {children}
