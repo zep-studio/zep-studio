@@ -16,24 +16,27 @@ type Props = {
 export const ConditionStatementBlock: React.FC<Props> = ({
   isLastItem = false,
 }) => {
-  const [isActionSelectorOpen, setActionSelectorOpen] =
+  const [isLeftValueSelectorOpen, setLeftValueSelectorOpen] =
     useState<boolean>(false);
-  const [isVariableSelectorOpen, setVariableSelectorOpen] =
+  const [isRightValueSelectorOpen, setRightValueSelectorOpen] =
     useState<boolean>(false);
+  const [isOperatorSelectorOpen, setOperatorSelectorOpen] =
+    useState<boolean>(false);
+  const [isLogicSelectorOpen, setLogicSelectorOpen] = useState<boolean>(false);
   const cleanupRef = useRef<any>(null);
 
   return (
     <Container className="action-block">
       <BlockHandle />
       <Center gap="8px">
-        <SelectorWrapper>
+        <SelectorWrapper className="left-value">
           <BlockVariable
-            $isSelectorOpen={isVariableSelectorOpen}
+            $isSelectorOpen={isLeftValueSelectorOpen}
             onClick={(event) => {
               cleanupRef.current = raiseAncestorControlBlock(event.target);
-              setVariableSelectorOpen((prev) => !prev);
+              setLeftValueSelectorOpen((prev) => !prev);
               setTimeout(() => {
-                if (isVariableSelectorOpen) {
+                if (isLeftValueSelectorOpen) {
                   setTimeout(() => cleanupRef.current?.(), 200);
                 }
               });
@@ -43,9 +46,9 @@ export const ConditionStatementBlock: React.FC<Props> = ({
           </BlockVariable>
 
           <AnimatePresence>
-            {isVariableSelectorOpen && (
+            {isLeftValueSelectorOpen && (
               <Selector
-                type="secondary"
+                type="primary"
                 items={Array.from({ length: 10 }, (_, i) => ({
                   title: 'Touch location',
                   value: 'Touch',
@@ -57,14 +60,14 @@ export const ConditionStatementBlock: React.FC<Props> = ({
           </AnimatePresence>
         </SelectorWrapper>
 
-        <SelectorWrapper>
+        <SelectorWrapper className="operator">
           <BlockActionName
-            $isSelectorOpen={isActionSelectorOpen}
+            $isSelectorOpen={isOperatorSelectorOpen}
             onClick={(event) => {
               cleanupRef.current = raiseAncestorControlBlock(event.target);
-              setActionSelectorOpen((prev) => !prev);
+              setOperatorSelectorOpen((prev) => !prev);
               setTimeout(() => {
-                if (isActionSelectorOpen) {
+                if (isOperatorSelectorOpen) {
                   setTimeout(() => cleanupRef.current?.(), 200);
                 }
               });
@@ -74,8 +77,9 @@ export const ConditionStatementBlock: React.FC<Props> = ({
           </BlockActionName>
 
           <AnimatePresence>
-            {isActionSelectorOpen && (
+            {isOperatorSelectorOpen && (
               <Selector
+                type="secondary"
                 items={Array.from({ length: 10 }, (_, i) => ({
                   title: 'Touch location',
                   value: 'Touch',
@@ -87,14 +91,14 @@ export const ConditionStatementBlock: React.FC<Props> = ({
           </AnimatePresence>
         </SelectorWrapper>
 
-        <SelectorWrapper>
+        <SelectorWrapper className="right-value">
           <BlockVariable
-            $isSelectorOpen={isVariableSelectorOpen}
+            $isSelectorOpen={isRightValueSelectorOpen}
             onClick={(event) => {
               cleanupRef.current = raiseAncestorControlBlock(event.target);
-              setVariableSelectorOpen((prev) => !prev);
+              setRightValueSelectorOpen((prev) => !prev);
               setTimeout(() => {
-                if (isVariableSelectorOpen) {
+                if (isRightValueSelectorOpen) {
                   setTimeout(() => cleanupRef.current?.(), 200);
                 }
               });
@@ -104,9 +108,9 @@ export const ConditionStatementBlock: React.FC<Props> = ({
           </BlockVariable>
 
           <AnimatePresence>
-            {isVariableSelectorOpen && (
+            {isRightValueSelectorOpen && (
               <Selector
-                type="secondary"
+                type="primary"
                 items={Array.from({ length: 10 }, (_, i) => ({
                   title: 'Touch location',
                   value: 'Touch',
@@ -119,14 +123,14 @@ export const ConditionStatementBlock: React.FC<Props> = ({
         </SelectorWrapper>
 
         {!isLastItem && (
-          <SelectorWrapper>
+          <SelectorWrapper className="logic">
             <BlockActionName
-              $isSelectorOpen={isActionSelectorOpen}
+              $isSelectorOpen={isLogicSelectorOpen}
               onClick={(event) => {
                 cleanupRef.current = raiseAncestorControlBlock(event.target);
-                setActionSelectorOpen((prev) => !prev);
+                setLogicSelectorOpen((prev) => !prev);
                 setTimeout(() => {
-                  if (isActionSelectorOpen) {
+                  if (isLogicSelectorOpen) {
                     setTimeout(() => cleanupRef.current?.(), 200);
                   }
                 });
@@ -136,8 +140,9 @@ export const ConditionStatementBlock: React.FC<Props> = ({
             </BlockActionName>
 
             <AnimatePresence>
-              {isActionSelectorOpen && (
+              {isLogicSelectorOpen && (
                 <Selector
+                  type="secondary"
                   items={Array.from({ length: 10 }, (_, i) => ({
                     title: 'Touch location',
                     value: 'Touch',

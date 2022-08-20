@@ -17,7 +17,8 @@ import { ControlBlockProps } from './types';
 type Props = ControlBlockProps & {};
 
 export const TriggerBlock: React.FC<Props> = ({ children }) => {
-  const [isSelectorOpen, setSelectorOpen] = useState<boolean>(false);
+  const [isTriggerSelectorOpen, setTriggerSelectorOpen] =
+    useState<boolean>(false);
   const cleanupRef = useRef<any>(null);
 
   return (
@@ -28,12 +29,12 @@ export const TriggerBlock: React.FC<Props> = ({ children }) => {
 
         <SelectorWrapper>
           <TriggerIntent
-            $isSelectorOpen={isSelectorOpen}
+            $isSelectorOpen={isTriggerSelectorOpen}
             onClick={(event) => {
               cleanupRef.current = raiseAncestorControlBlock(event.target);
-              setSelectorOpen((prev) => !prev);
+              setTriggerSelectorOpen((prev) => !prev);
               setTimeout(() => {
-                if (isSelectorOpen) {
+                if (isTriggerSelectorOpen) {
                   setTimeout(() => cleanupRef.current?.(), 200);
                 }
               });
@@ -42,7 +43,7 @@ export const TriggerBlock: React.FC<Props> = ({ children }) => {
             When someone says something
           </TriggerIntent>
           <AnimatePresence>
-            {isSelectorOpen && (
+            {isTriggerSelectorOpen && (
               <Selector
                 items={Array.from({ length: 10 }, (_, i) => ({
                   title: 'Touch location',
