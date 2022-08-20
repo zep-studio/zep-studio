@@ -1,3 +1,3 @@
 # ZEP Studio
 
-A Blockcoding Editor for ZEP Script-based Apps
+A Block Coding Editor for ZEP Script-based Apps
