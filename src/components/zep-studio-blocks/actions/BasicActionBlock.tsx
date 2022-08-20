@@ -1,11 +1,12 @@
 import { Center } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { BlockAttribute } from '../atoms/BlockAttribute';
 import { BlockHandle } from '../atoms/BlockHandle';
 import { BlockRemoveButton } from '../atoms/BlockRemoveButton';
+import { raiseAncestorControlBlock } from '../atoms/ControlBlockContainer';
 import { Selector, SelectorWrapper } from '../atoms/Selector';
 
 type Props = {};
@@ -15,6 +16,7 @@ export const BasicActionBlock: React.FC<Props> = () => {
     useState<boolean>(false);
   const [isVariableSelectorOpen, setVariableSelectorOpen] =
     useState<boolean>(false);
+  const cleanupRef = useRef<any>(null);
 
   return (
     <Container className="action-block">
@@ -23,7 +25,15 @@ export const BasicActionBlock: React.FC<Props> = () => {
         <SelectorWrapper>
           <BlockActionName
             $isSelectorOpen={isActionSelectorOpen}
-            onClick={() => setActionSelectorOpen((prev) => !prev)}
+            onClick={(event) => {
+              cleanupRef.current = raiseAncestorControlBlock(event.target);
+              setActionSelectorOpen((prev) => !prev);
+              setTimeout(() => {
+                if (isActionSelectorOpen) {
+                  setTimeout(() => cleanupRef.current?.());
+                }
+              });
+            }}
           >
             Say
           </BlockActionName>
@@ -45,7 +55,15 @@ export const BasicActionBlock: React.FC<Props> = () => {
         <SelectorWrapper>
           <BlockVariable
             $isSelectorOpen={isVariableSelectorOpen}
-            onClick={() => setVariableSelectorOpen((prev) => !prev)}
+            onClick={(event) => {
+              cleanupRef.current = raiseAncestorControlBlock(event.target);
+              setVariableSelectorOpen((prev) => !prev);
+              setTimeout(() => {
+                if (isVariableSelectorOpen) {
+                  setTimeout(() => cleanupRef.current?.());
+                }
+              });
+            }}
           >
             text
           </BlockVariable>

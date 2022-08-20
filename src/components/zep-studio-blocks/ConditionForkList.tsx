@@ -77,7 +77,7 @@ const BottomArrowContainer = styled.div`
   bottom: 4px;
   left: 0;
   right: 0;
-  z-index: -1;
+  z-index: -2;
 
   display: flex;
   justify-content: center;

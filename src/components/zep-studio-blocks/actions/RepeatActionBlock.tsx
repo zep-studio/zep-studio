@@ -2,12 +2,13 @@ import { Center } from '@chakra-ui/react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { ZEPStudioIcon } from '../../ZEPStudioIcon';
 import { BlockAttribute } from '../atoms/BlockAttribute';
 import { BlockHandle } from '../atoms/BlockHandle';
 import { BlockRemoveButton } from '../atoms/BlockRemoveButton';
+import { raiseAncestorControlBlock } from '../atoms/ControlBlockContainer';
 import { Selector, SelectorWrapper } from '../atoms/Selector';
 import { ControlBlockProps } from '../types';
 
@@ -18,6 +19,7 @@ export const RepeatActionBlock: React.FC<Props> = ({ children }) => {
     useState<boolean>(false);
   const [isVariableSelectorOpen, setVariableSelectorOpen] =
     useState<boolean>(false);
+  const cleanupRef = useRef<any>(null);
 
   return (
     <RepeatScopeList $hasChildren={!!children}>
@@ -30,7 +32,15 @@ export const RepeatActionBlock: React.FC<Props> = ({ children }) => {
           <SelectorWrapper>
             <BlockActionName
               $isSelectorOpen={isActionSelectorOpen}
-              onClick={() => setActionSelectorOpen((prev) => !prev)}
+              onClick={(event) => {
+                cleanupRef.current = raiseAncestorControlBlock(event.target);
+                setActionSelectorOpen((prev) => !prev);
+                setTimeout(() => {
+                  if (isActionSelectorOpen) {
+                    setTimeout(() => cleanupRef.current?.());
+                  }
+                });
+              }}
             >
               Say
             </BlockActionName>
@@ -52,7 +62,15 @@ export const RepeatActionBlock: React.FC<Props> = ({ children }) => {
           <SelectorWrapper>
             <BlockVariable
               $isSelectorOpen={isVariableSelectorOpen}
-              onClick={() => setVariableSelectorOpen((prev) => !prev)}
+              onClick={(event) => {
+                cleanupRef.current = raiseAncestorControlBlock(event.target);
+                setVariableSelectorOpen((prev) => !prev);
+                setTimeout(() => {
+                  if (isVariableSelectorOpen) {
+                    setTimeout(() => cleanupRef.current?.());
+                  }
+                });
+              }}
             >
               text
             </BlockVariable>

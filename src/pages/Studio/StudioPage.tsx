@@ -54,6 +54,11 @@ const BlockList = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 0;
+
+  /* & > * {
+    z-index: 0;
+  } */
 `;
 
 const StrightArrow: React.FC = () => (
