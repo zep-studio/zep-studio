@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   imageURL?: string;
@@ -13,8 +14,10 @@ export const FunctionCard: React.FC<Props> = ({
   description,
   badge,
 }) => {
+  const navigate = useNavigate();
+
   return (
-    <Container>
+    <Container onClick={() => navigate('/studio')}>
       <ImageWrapper>
         {!!imageURL && <Image src={imageURL} />}
         {!!badge && (
@@ -34,6 +37,7 @@ export const FunctionCard: React.FC<Props> = ({
 
 const Container = styled.li`
   width: calc((100% - 24px) / 3);
+  cursor: pointer;
 `;
 
 const ImageWrapper = styled.div`
