@@ -51,9 +51,20 @@ const BlocklyComponent: React.FC<BlocklyComponentProps> = (props) => {
     });
   }, [generatedCode]);
 
+  const [serialized, setSerialized] = useState<string>('');
+
   const onClickConvert = useCallback(() => {
+    if (!primaryWorkspace.current) return;
+
     const code = BlocklyJS.workspaceToCode(primaryWorkspace.current);
     setGeneratedCode(code);
+    setSerialized(
+      JSON.stringify(
+        Blockly.serialization.workspaces.save(primaryWorkspace.current),
+        undefined,
+        2,
+      ),
+    );
   }, []);
 
   const isInitalizedRef = useRef<boolean>(false);
@@ -87,6 +98,9 @@ const BlocklyComponent: React.FC<BlocklyComponentProps> = (props) => {
       <button onClick={onClickConvert}>Convert</button>
       <pre>
         <code>{formattedCode}</code>
+      </pre>
+      <pre>
+        <code>{serialized}</code>
       </pre>
       <div ref={blocklyDiv} id="blocklyDiv" />
       <div style={{ display: 'none' }} ref={toolbox}>
