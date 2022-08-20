@@ -7,7 +7,7 @@ import { ZEPStudioIcon } from '../ZEPStudioIcon';
 import { BlockAttribute } from './atoms/BlockAttribute';
 import { BlockFooter } from './atoms/BlockFooter';
 import { BlockHeader } from './atoms/BlockHeader';
-import { Selector } from './atoms/Selector';
+import { Selector, SelectorWrapper } from './atoms/Selector';
 import { ControlBlockProps } from './types';
 
 type Props = ControlBlockProps & {};
@@ -21,7 +21,7 @@ export const TriggerBlock: React.FC<Props> = ({ children }) => {
         <ZEPStudioIcon icon="icon_trigger_24" color="white" size={24} />
         <Title>When the trigger</Title>
 
-        <TriggerIntentWrapper>
+        <SelectorWrapper>
           <TriggerIntent
             $isSelectorOpen={isSelectorOpen}
             onClick={() => setSelectorOpen((prev) => !prev)}
@@ -40,7 +40,7 @@ export const TriggerBlock: React.FC<Props> = ({ children }) => {
               />
             )}
           </AnimatePresence>
-        </TriggerIntentWrapper>
+        </SelectorWrapper>
 
         <Title>happens</Title>
       </Header>
@@ -76,12 +76,6 @@ const Title = styled.span`
   color: #ffffff;
 `;
 
-const TriggerIntentWrapper = styled.div`
-  position: relative;
-  display: flex;
-
-  position: relative;
-`;
 const TriggerIntent = styled(BlockAttribute)`
   padding: 12px;
   padding-left: 16px;

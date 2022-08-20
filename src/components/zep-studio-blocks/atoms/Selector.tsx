@@ -12,6 +12,13 @@ type Props = {
   items?: SelectItem[];
 };
 
+export const SelectorWrapper = styled.div`
+  position: relative;
+  display: flex;
+
+  position: relative;
+`;
+
 export const Selector: React.FC<Props> = ({ type = 'primary', items = [] }) => {
   return (
     <Container

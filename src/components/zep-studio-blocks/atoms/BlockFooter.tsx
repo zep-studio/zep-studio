@@ -16,7 +16,7 @@ export const BlockFooter: React.FC<Props> = () => {
   );
 };
 
-const Container = styled.div`
+const Container = styled.button`
   width: 100%;
 
   display: flex;
@@ -30,6 +30,11 @@ const Container = styled.div`
 
   background: #ffffff;
   border-radius: 0px 0px 12px 12px;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.035);
+  }
 `;
 
 const ButtonTitle = styled.div`
