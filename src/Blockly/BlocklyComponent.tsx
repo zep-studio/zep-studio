@@ -26,29 +26,56 @@ import './BlocklyComponent.css';
 
 import Blockly from 'blockly/core';
 import BlocklyJS from 'blockly/javascript';
+// @ts-ignore
 import locale from 'blockly/msg/en';
 import { useEffect, useRef } from 'react';
 
 import 'blockly/blocks';
 
+import { WorkspaceSvg } from 'blockly/core';
+
+// @ts-ignore
 Blockly.setLocale(locale);
 
-function BlocklyComponent(props) {
-  const blocklyDiv = useRef();
-  const toolbox = useRef();
-  let primaryWorkspace = useRef();
+type BlocklyComponentProps = {
+  readOnly?: boolean;
+  trashcan?: boolean;
+  media?: string;
+  move: {
+    scrollbars: boolean;
+    drag: boolean;
+    wheel: boolean;
+  };
+  initialXml?: string;
+  children?: React.ReactNode;
+};
+
+const BlocklyComponent: React.FC<BlocklyComponentProps> = (props) => {
+  const blocklyDiv = useRef<HTMLDivElement>(null);
+  const toolbox = useRef<HTMLDivElement>(null);
+  const primaryWorkspace = useRef<WorkspaceSvg | null>(null);
 
   const generateCode = () => {
     var code = BlocklyJS.workspaceToCode(primaryWorkspace.current);
     console.log(code);
   };
 
+  const isInitalizedRef = useRef<boolean>(false);
+
   useEffect(() => {
     const { initialXml, children, ...rest } = props;
+    if (!blocklyDiv.current) {
+      return;
+    }
+    if (!!isInitalizedRef.current) {
+      return;
+    }
     primaryWorkspace.current = Blockly.inject(blocklyDiv.current, {
+      // @ts-ignore
       toolbox: toolbox.current,
       ...rest,
     });
+    isInitalizedRef.current = true;
 
     if (initialXml) {
       Blockly.Xml.domToWorkspace(
@@ -67,6 +94,6 @@ function BlocklyComponent(props) {
       </div>
     </React.Fragment>
   );
-}
+};
 
 export default BlocklyComponent;
