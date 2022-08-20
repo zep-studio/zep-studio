@@ -2,6 +2,7 @@ import { Center, Flex } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
+import { ZEPStudioBadge } from './ZEPStudioBadge';
 import { ZEPStudioIcon } from './ZEPStudioIcon';
 
 const Navigation: React.FC = () => {
@@ -14,6 +15,8 @@ const Navigation: React.FC = () => {
         </GrayBreadcrumb>
         <GrayBreadcrumb>/</GrayBreadcrumb>
         <TitleBreadcrumb>Create a new function</TitleBreadcrumb>
+
+        <ZEPStudioBadge>Block #1</ZEPStudioBadge>
       </Center>
 
       <Center gap="19px">
