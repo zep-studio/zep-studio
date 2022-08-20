@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { BadgeList } from './components/BadgeList';
 import { FunctionCard } from './components/FunctionCard';
 import { SectionTitle } from './components/SectionTitle';
+import { TopButtons } from './components/TopButtons';
 
 const BADGES = [
   'All',
@@ -57,6 +58,8 @@ export const HomePage: React.FC = () => {
   return (
     <Wrapper>
       <Container>
+        <TopButtons />
+
         <Header>
           <Information>
             <TitleJustForSEO>ZEP studio</TitleJustForSEO>
@@ -93,6 +96,7 @@ const Container = styled.main`
   width: 980px;
   height: 798px;
   overflow-y: scroll;
+  position: relative;
 
   padding: 40px 32px;
 

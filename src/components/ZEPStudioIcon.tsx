@@ -42,6 +42,8 @@ const IconImage = styled.span<{
       : !!icon &&
         css`
           mask-image: url('/assets/icons/${icon}.svg');
+          mask-repeat: no-repeat;
+          mask-size: contain;
           background-color: ${color};
         `};
 `;
