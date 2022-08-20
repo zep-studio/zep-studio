@@ -34,12 +34,14 @@ const TRIGGERS = [
 type Props = ControlBlockProps & {
   trigger: string | undefined;
   setBlock: (block: Partial<TriggerBlockDraft>) => void;
+  onAddNewBlock: (blockType: string) => void;
 };
 
 export const TriggerBlock: React.FC<Props> = ({
   children,
   trigger,
   setBlock,
+  onAddNewBlock,
 }) => {
   const [isTriggerSelectorOpen, setTriggerSelectorOpen] =
     useState<boolean>(false);
@@ -95,7 +97,7 @@ export const TriggerBlock: React.FC<Props> = ({
         <Title>happens</Title>
       </Header>
       {children}
-      <BlockFooter />
+      <BlockFooter parentBlockType="trigger" onAddNewBlock={onAddNewBlock} />
     </Container>
   );
 };

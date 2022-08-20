@@ -14,7 +14,7 @@ export const SelectorWrapper = styled.div`
   position: relative;
 `;
 
-type Props = HTMLMotionProps<'div'> & {
+type Props = Omit<HTMLMotionProps<'div'>, 'onSelect'> & {
   type?: 'primary' | 'secondary';
   items?: SelectItem[];
   onSelect?: (value: string) => void;

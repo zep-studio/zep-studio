@@ -1,6 +1,6 @@
 import { Box, Flex, Stack } from '@chakra-ui/react';
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import { SCRIPTAPP_LIFECYCLE_ON_INIT } from '../../blocks/scriptapp';
 import Navigation from '../../components/Navigation';
@@ -12,7 +12,10 @@ import { ConditionEndBlock } from '../../components/zep-studio-blocks/conditions
 import { ConditionForkBlock } from '../../components/zep-studio-blocks/conditions/ConditionForkBlock';
 import { ConditionForkList } from '../../components/zep-studio-blocks/conditions/ConditionForkList';
 import { ConditionStartBlock } from '../../components/zep-studio-blocks/conditions/ConditionStartBlock';
-import { BlockDraft } from '../../components/zep-studio-blocks/types';
+import {
+  BlockDraft,
+  ConditionBlockDraft,
+} from '../../components/zep-studio-blocks/types';
 
 export const StudioPage: React.FC = () => {
   const [blocks, setBlocks] = useState<BlockDraft[]>([
@@ -28,7 +31,14 @@ export const StudioPage: React.FC = () => {
       <Navigation />
       <Box paddingTop="68px">
         <Flex h="100vh">
-          <Stack w="full" h="150vh" padding="54px" bg={'gray.200'}>
+          <Stack
+            w="full"
+            h="fit-content"
+            minH="150vh"
+            padding="54px"
+            paddingBottom="500px"
+            bg={'gray.200'}
+          >
             <BlockList>
               {blocks.map((item, index) => {
                 const setBlock = (block: Partial<BlockDraft>) => {
@@ -40,37 +50,59 @@ export const StudioPage: React.FC = () => {
                   setBlocks(newBlocks);
                 };
 
+                const onAddNewBlock = (blockType: string) => {
+                  let newBlock: BlockDraft | null = null;
+                  if (blockType === 'condition') {
+                    newBlock = {
+                      // TODO: Randomize ID
+                      id: `${index}-condition-start`,
+                      type: 'condition',
+                    } as ConditionBlockDraft;
+                  }
+                  if (!newBlock) {
+                    return;
+                  }
+                  setBlocks((prev) => [...prev, newBlock as BlockDraft]);
+                };
+
                 if (item.type === 'trigger') {
                   return (
                     <TriggerBlock
                       key={item.id}
                       trigger={item.trigger}
                       setBlock={setBlock}
+                      onAddNewBlock={onAddNewBlock}
                     />
+                  );
+                }
+
+                if (item.type === 'condition') {
+                  return (
+                    <React.Fragment key={item.id}>
+                      <StrightArrow />
+                      <ConditionStartBlock>
+                        {/* <ConditionStatementBlock />
+                        <ConditionStatementBlock isLastItem /> */}
+                      </ConditionStartBlock>
+
+                      <ConditionForkList>
+                        <ConditionForkBlock satisfied>
+                          {/* <BasicActionBlock /> */}
+                        </ConditionForkBlock>
+                        <ConditionForkBlock satisfied={false}>
+                          {/* <RepeatActionBlock>
+                            <BasicActionBlock />
+                            <BasicActionBlock />
+                          </RepeatActionBlock> */}
+                        </ConditionForkBlock>
+                      </ConditionForkList>
+
+                      <ConditionEndBlock onAddNewBlock={onAddNewBlock} />
+                    </React.Fragment>
                   );
                 }
                 return null;
               })}
-              {/* <TriggerBlock />
-              <StrightArrow />
-              <ConditionStartBlock>
-                <ConditionStatementBlock />
-                <ConditionStatementBlock isLastItem />
-              </ConditionStartBlock>
-
-              <ConditionForkList>
-                <ConditionForkBlock satisfied>
-                  <BasicActionBlock />
-                </ConditionForkBlock>
-                <ConditionForkBlock satisfied={false}>
-                  <RepeatActionBlock>
-                    <BasicActionBlock />
-                    <BasicActionBlock />
-                  </RepeatActionBlock>
-                </ConditionForkBlock>
-              </ConditionForkList>
-
-              <ConditionEndBlock /> */}
             </BlockList>
           </Stack>
           <Stack

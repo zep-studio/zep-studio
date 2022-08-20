@@ -6,9 +6,14 @@ import { BlockHeader } from '../atoms/BlockHeader';
 import { ControlBlockContainer } from '../atoms/ControlBlockContainer';
 import { ControlBlockProps } from '../types';
 
-type Props = ControlBlockProps & {};
+type Props = ControlBlockProps & {
+  onAddNewBlock: (blockType: string) => void;
+};
 
-export const ConditionEndBlock: React.FC<Props> = ({ children }) => {
+export const ConditionEndBlock: React.FC<Props> = ({
+  children,
+  onAddNewBlock,
+}) => {
   return (
     <Container>
       <Header>
@@ -16,7 +21,10 @@ export const ConditionEndBlock: React.FC<Props> = ({ children }) => {
         <Title>Condition</Title>
       </Header>
       {children}
-      <BlockFooter />
+      <BlockFooter
+        parentBlockType="condition-end"
+        onAddNewBlock={onAddNewBlock}
+      />
     </Container>
   );
 };

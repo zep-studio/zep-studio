@@ -7,11 +7,27 @@ import { ZEPStudioIcon } from '../../ZEPStudioIcon';
 import { raiseAncestorControlBlock } from './ControlBlockContainer';
 import { Selector, SelectorWrapper } from './Selector';
 
-type Props = {};
+const NEW_BLOCKS = [
+  {
+    title: 'Condition',
+    value: 'condition',
+    description: 'Add a new if/else condition',
+    allowedParentBlockType: ['trigger', 'condition-end'],
+  },
+];
 
-export const BlockFooter: React.FC<Props> = () => {
+type Props = {
+  parentBlockType?: string;
+  onAddNewBlock?: (blockType: string) => void;
+};
+
+export const BlockFooter: React.FC<Props> = ({
+  parentBlockType,
+  onAddNewBlock,
+}) => {
   const [isSelectorOpen, setSelectorOpen] = useState<boolean>(false);
   const cleanupRef = useRef<any>(null);
+  const centerRef = useRef<any>(null);
 
   return (
     <SelectorWrapper>
@@ -26,7 +42,7 @@ export const BlockFooter: React.FC<Props> = () => {
           });
         }}
       >
-        <Center gap="8px">
+        <Center gap="8px" ref={centerRef}>
           <ZEPStudioIcon icon="icon_plus_24" size={24} />
           <ButtonTitle>Create a new block</ButtonTitle>
         </Center>
@@ -35,13 +51,21 @@ export const BlockFooter: React.FC<Props> = () => {
       <AnimatePresence>
         {isSelectorOpen && (
           <Selector
-            items={Array.from({ length: 10 }, (_, i) => ({
-              title: 'Touch location',
-              value: 'Touch',
-              description:
-                "When a player arrives in the specified 'specified area'",
-            }))}
+            items={NEW_BLOCKS.filter((v) =>
+              v.allowedParentBlockType.includes(parentBlockType ?? ''),
+            )}
             style={{ top: 48 + 8, left: 'unset', right: 82 }}
+            onSelect={(value) => {
+              onAddNewBlock?.(value);
+              cleanupRef.current = raiseAncestorControlBlock(centerRef.current);
+
+              setSelectorOpen((prev) => !prev);
+              setTimeout(() => {
+                if (isSelectorOpen) {
+                  setTimeout(() => cleanupRef.current?.(), 200);
+                }
+              }, 200);
+            }}
           />
         )}
       </AnimatePresence>

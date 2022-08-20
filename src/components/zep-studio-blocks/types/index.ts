@@ -8,8 +8,14 @@ export type TriggerBlockDraft = {
   trigger: string | undefined;
 };
 
+export type ConditionBlockDraft = {
+  id: string;
+  type: 'condition';
+};
+
 export type BlockDraft =
   | TriggerBlockDraft
+  | ConditionBlockDraft
   | {
       id: string;
       type: '';
