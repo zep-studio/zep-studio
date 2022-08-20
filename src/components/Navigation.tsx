@@ -2,10 +2,29 @@ import { Center, Flex } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import { Link, useNavigate } from 'react-router-dom';
 
+import { publish } from '../core/publish';
+import { zipZepApp } from '../core/zip';
 import { ZEPStudioBadge } from './ZEPStudioBadge';
 import { ZEPStudioIcon } from './ZEPStudioIcon';
 
+const token = `.AspNetCore.Session=CfDJ8F1b9ttwOadPjVuGHkYnESqZ1oE%2BpTWK0jW7XELN0zg7F%2FT3iW%2BPRbaHSPbkz%2Fdkn2epqcmjynyDjmFyWrdotx%2BSYigPn9xGgWrR8xO2i0nloUdd7CeMxIcsbSGoovoiDk%2BOSWl1XewcM71P2i7ebpd4x6nMCIfbgcdk9qN5TYCQ; max-age=2592000; path=/; secure; samesite=lax; httponly`;
+
 const Navigation: React.FC = () => {
+  const onPublishClick = async () => {
+    try {
+      const zip = await zipZepApp('App.onInit.Add(function () {});');
+      const id = await publish({
+        token,
+        name: '이게나야',
+        description: '설명인데용?',
+        file: zip,
+        type: 1,
+      });
+      console.log(id);
+    } catch (err) {
+      console.error(err);
+    }
+  };
   const navigate = useNavigate();
 
   return (
@@ -34,7 +53,7 @@ const Navigation: React.FC = () => {
       </Center>
 
       <Center gap="19px">
-        <PublishButton>Publish</PublishButton>
+        <PublishButton onClick={onPublishClick}>Publish</PublishButton>
         <SquareButton>
           <ZEPStudioIcon icon="icon_more_24" size={24} color="#ADB5BD" />
         </SquareButton>
