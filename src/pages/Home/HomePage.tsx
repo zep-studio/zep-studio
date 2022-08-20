@@ -6,6 +6,7 @@ import { ConditionForkBlock } from '../../components/zep-studio-blocks/Condition
 import { ConditionStartBlock } from '../../components/zep-studio-blocks/ConditionStartBlock';
 import { TriggerBlock } from '../../components/zep-studio-blocks/TriggerBlock';
 import { BasicActionBlock } from '../../components/zep-studio-blocks/actions/BasicActionBlock';
+import { RepeatActionBlock } from '../../components/zep-studio-blocks/actions/RepeatActionBlock';
 
 function Home() {
   return (
@@ -20,7 +21,12 @@ function Home() {
               <ConditionForkBlock satisfied>
                 <BasicActionBlock />
               </ConditionForkBlock>
-              <ConditionForkBlock satisfied={false} />
+              <ConditionForkBlock satisfied={false}>
+                <RepeatActionBlock>
+                  <BasicActionBlock />
+                  <BasicActionBlock />
+                </RepeatActionBlock>
+              </ConditionForkBlock>
               <ConditionEndBlock />
             </Stack>
             <Stack

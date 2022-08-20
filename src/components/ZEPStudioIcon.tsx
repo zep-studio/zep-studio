@@ -28,7 +28,10 @@ const IconImage = styled.span<{
 
   ${({ size }) => css`
     width: ${size}px;
+    min-width: ${size}px;
+
     height: ${size}px;
+    min-height: ${size}px;
   `};
 
   ${({ color, icon }) =>
