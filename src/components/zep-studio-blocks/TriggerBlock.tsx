@@ -34,7 +34,7 @@ export const TriggerBlock: React.FC<Props> = ({ children }) => {
               setSelectorOpen((prev) => !prev);
               setTimeout(() => {
                 if (isSelectorOpen) {
-                  setTimeout(() => cleanupRef.current?.());
+                  setTimeout(() => cleanupRef.current?.(), 200);
                 }
               });
             }}

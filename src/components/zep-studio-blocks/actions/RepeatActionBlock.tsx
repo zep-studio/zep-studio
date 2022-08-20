@@ -37,7 +37,7 @@ export const RepeatActionBlock: React.FC<Props> = ({ children }) => {
                 setActionSelectorOpen((prev) => !prev);
                 setTimeout(() => {
                   if (isActionSelectorOpen) {
-                    setTimeout(() => cleanupRef.current?.());
+                    setTimeout(() => cleanupRef.current?.(), 200);
                   }
                 });
               }}
@@ -67,7 +67,7 @@ export const RepeatActionBlock: React.FC<Props> = ({ children }) => {
                 setVariableSelectorOpen((prev) => !prev);
                 setTimeout(() => {
                   if (isVariableSelectorOpen) {
-                    setTimeout(() => cleanupRef.current?.());
+                    setTimeout(() => cleanupRef.current?.(), 200);
                   }
                 });
               }}

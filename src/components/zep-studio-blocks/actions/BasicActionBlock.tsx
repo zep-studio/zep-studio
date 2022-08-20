@@ -30,7 +30,7 @@ export const BasicActionBlock: React.FC<Props> = () => {
               setActionSelectorOpen((prev) => !prev);
               setTimeout(() => {
                 if (isActionSelectorOpen) {
-                  setTimeout(() => cleanupRef.current?.());
+                  setTimeout(() => cleanupRef.current?.(), 200);
                 }
               });
             }}
@@ -60,7 +60,7 @@ export const BasicActionBlock: React.FC<Props> = () => {
               setVariableSelectorOpen((prev) => !prev);
               setTimeout(() => {
                 if (isVariableSelectorOpen) {
-                  setTimeout(() => cleanupRef.current?.());
+                  setTimeout(() => cleanupRef.current?.(), 200);
                 }
               });
             }}
