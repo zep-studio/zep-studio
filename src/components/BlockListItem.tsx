@@ -1,9 +1,11 @@
-import { Text } from '@chakra-ui/react';
+// import { Text } from '@chakra-ui/react';
 
-import { Block } from '../types';
+// // import { Block } from '../types';
 
-function BlockListItem({ block }: { block: Block }) {
-  return <Text>{block.name}</Text>;
-}
+// function BlockListItem({ block }: { block: Block }) {
+//   return <Text>{block.name}</Text>;
+// }
 
-export default BlockListItem;
+// export default BlockListItem;
+
+export {};

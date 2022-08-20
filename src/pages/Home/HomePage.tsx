@@ -1,22 +1,22 @@
 import { Box, Button, Flex, Stack, Text } from '@chakra-ui/react';
-import { useRecoilState } from 'recoil';
 
-import Navigation from '../Navigation';
-import BlockListItem from '../components/BlockListItem';
-import blocksState from '../store/blocksState';
-import { Block } from '../types';
+// import { useRecoilState } from 'recoil';
+// import BlockListItem from '../../components/BlockListItem';
+import Navigation from '../../components/Navigation';
+
+// import blocksState from '../../store/blocksState';
 
 function Home() {
-  const [blocks, setBlocks] = useRecoilState<Block[]>(blocksState);
+  // const [blocks, setBlocks] = useRecoilState<Block[]>(blocksState);
 
-  const handleCreateBlock = () => {
-    setBlocks([
-      ...blocks,
-      {
-        name: `Block #${blocks.length + 1}`,
-      },
-    ]);
-  };
+  // const handleCreateBlock = () => {
+  //   setBlocks([
+  //     ...blocks,
+  //     {
+  //       name: `Block #${blocks.length + 1}`,
+  //     },
+  //   ]);
+  // };
 
   return (
     <div className="App">
@@ -48,14 +48,14 @@ function Home() {
                 w="full"
                 size={'lg'}
                 bg={'gray.200'}
-                onClick={handleCreateBlock}
+                // onClick={handleCreateBlock}
               >
                 Create a new block
               </Button>
 
-              {blocks.map((block) => {
+              {/* {blocks.map((block) => {
                 return <BlockListItem key={block.name} block={block} />;
-              })}
+              })} */}
             </Stack>
             <Stack
               w="full"
