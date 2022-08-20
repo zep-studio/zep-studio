@@ -11,4 +11,6 @@ export const BlockHeader = styled.div`
 
   background: #7e8992;
   border-radius: 12px 12px 0px 0px;
+
+  user-select: none;
 `;
