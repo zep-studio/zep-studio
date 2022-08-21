@@ -1,13 +1,16 @@
 import { Box, Flex, Stack } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import React, {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
+  useCallback, // useEffect,
+  // useLayoutEffect,
   useMemo,
   useRef,
   useState,
 } from 'react';
+// @ts-ignore
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+// @ts-ignore
+import { xonokai as colorscheme } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import { v4 as uuidv4 } from 'uuid';
 
 import {
@@ -18,7 +21,7 @@ import Navigation from '../../components/Navigation';
 import { TriggerBlock } from '../../components/zep-studio-blocks/TriggerBlock';
 import { BasicActionBlock } from '../../components/zep-studio-blocks/actions/BasicActionBlock';
 import { RepeatActionBlock } from '../../components/zep-studio-blocks/actions/RepeatActionBlock';
-import { ConditionStatementBlock } from '../../components/zep-studio-blocks/condition-statements/ConditionStatementBlock';
+// import { ConditionStatementBlock } from '../../components/zep-studio-blocks/condition-statements/ConditionStatementBlock';
 import { ConditionEndBlock } from '../../components/zep-studio-blocks/conditions/ConditionEndBlock';
 import { ConditionForkBlock } from '../../components/zep-studio-blocks/conditions/ConditionForkBlock';
 import { ConditionForkList } from '../../components/zep-studio-blocks/conditions/ConditionForkList';
@@ -106,12 +109,13 @@ App.onSay.Add(function (player, text) {
   return (
     <main>
       <Navigation onClickPublish={() => setPublished(true)} />
-      <Box paddingTop="68px">
+      <Box>
         <Flex h="100vh">
           <Stack
+            marginTop="68px"
             w="full"
             h="fit-content"
-            minH="150vh"
+            minH="200vh"
             padding="54px"
             paddingBottom="500px"
             bg={'gray.200'}
@@ -342,7 +346,7 @@ App.onSay.Add(function (player, text) {
           </Stack>
           <Stack
             w="30vw"
-            h="150vh"
+            h="200vh"
             position="relative"
             spacing={10}
             alignItems="flex-start"
@@ -357,17 +361,14 @@ App.onSay.Add(function (player, text) {
                   height={'100%'}
                 ></iframe>
               </Stack>
-              <Stack p={2} style={{ marginTop: '-15px' }}>
-                {!!isPublished && (
-                  <pre>
-                    <code
-                      className="language-javascript"
-                      style={{ color: '#fff', fontSize: 14 }}
-                    >
-                      {generatedCode}
-                    </code>
-                  </pre>
-                )}
+              <Stack p={2}>
+                {/* {!!isPublished && ( */}
+                <HighlightContainer>
+                  <SyntaxHighlighter language="js" style={colorscheme}>
+                    {generatedCode}
+                  </SyntaxHighlighter>
+                </HighlightContainer>
+                {/* // )} */}
               </Stack>
             </Stack>
           </Stack>
@@ -403,4 +404,15 @@ const StrightArrow: React.FC = () => (
 const StrightArrowContainer = styled.div`
   padding: 4px 0;
   display: flex;
+`;
+
+const HighlightContainer = styled.div`
+  display: flex;
+
+  pre {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    border: 0 !important;
+    background-color: transparent !important;
+  }
 `;
