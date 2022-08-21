@@ -9,9 +9,13 @@ import { ZEPStudioIcon } from './ZEPStudioIcon';
 
 const token = `.AspNetCore.Session=CfDJ8F1b9ttwOadPjVuGHkYnESqZ1oE%2BpTWK0jW7XELN0zg7F%2FT3iW%2BPRbaHSPbkz%2Fdkn2epqcmjynyDjmFyWrdotx%2BSYigPn9xGgWrR8xO2i0nloUdd7CeMxIcsbSGoovoiDk%2BOSWl1XewcM71P2i7ebpd4x6nMCIfbgcdk9qN5TYCQ; max-age=2592000; path=/; secure; samesite=lax; httponly`;
 
-const Navigation: React.FC = () => {
+type NavigationProps = {
+  onClickPublish?: () => void;
+};
+const Navigation: React.FC<NavigationProps> = ({ onClickPublish }) => {
   const toast = useToast();
   const onPublishClick = async () => {
+    onClickPublish?.();
     const code = `
     App.onSay.Add(function (player, text) {
       App.sayToAll('Hello, this is Junction Asia here');

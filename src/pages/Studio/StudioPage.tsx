@@ -101,9 +101,11 @@ App.onSay.Add(function (player, text) {
 });
   `);
 
+  const [isPublished, setPublished] = useState<boolean>(false);
+
   return (
     <main>
-      <Navigation />
+      <Navigation onClickPublish={() => setPublished(true)} />
       <Box paddingTop="68px">
         <Flex h="100vh">
           <Stack
@@ -150,7 +152,7 @@ App.onSay.Add(function (player, text) {
                         blockType === 'repeat'
                           ? 'repeat'
                           : SCRIPTAPP_METHODS_SAY_TO_ALL,
-                      blocks: [{}],
+                      blocks: [{ id: uuidv4() }],
                     } as ActionBlockDraft;
                   }
                   if (!newBlock) {
@@ -259,15 +261,19 @@ App.onSay.Add(function (player, text) {
                                     key={block.id}
                                     // action={block.action}
                                   >
-                                    {(block as any).blocks.map((_: any) => {
-                                      return (
-                                        <BasicActionBlock
-                                          key={uuidv4()}
-                                          // blockId={block.id}
-                                          action={SCRIPTAPP_METHODS_SAY_TO_ALL}
-                                        />
-                                      );
-                                    })}
+                                    {(block as any).blocks.map(
+                                      (block: BlockDraft) => {
+                                        return (
+                                          <BasicActionBlock
+                                            key={block.id}
+                                            // blockId={block.id}
+                                            action={
+                                              SCRIPTAPP_METHODS_SAY_TO_ALL
+                                            }
+                                          />
+                                        );
+                                      },
+                                    )}
                                   </RepeatActionBlock>
                                 );
                               }
@@ -342,23 +348,27 @@ App.onSay.Add(function (player, text) {
             alignItems="flex-start"
             bg={'gray.600'}
           >
-            <Stack w="100%" h="60vh">
-              <iframe
-                title="zep-preview"
-                src="https://zep.us/play/8j7NaQ"
-                ref={previewView}
-                height={'100%'}
-              ></iframe>
-            </Stack>
-            <Stack p={2} style={{ marginTop: '-15px' }}>
-              <pre>
-                <code
-                  className="language-javascript"
-                  style={{ color: '#fff', fontSize: 14 }}
-                >
-                  {generatedCode}
-                </code>
-              </pre>
+            <Stack position="sticky" w="full" top="0" left="0" right="0">
+              <Stack w="100%" h="60vh">
+                <iframe
+                  title="zep-preview"
+                  src="https://zep.us/play/8j7NaQ"
+                  ref={previewView}
+                  height={'100%'}
+                ></iframe>
+              </Stack>
+              <Stack p={2} style={{ marginTop: '-15px' }}>
+                {!!isPublished && (
+                  <pre>
+                    <code
+                      className="language-javascript"
+                      style={{ color: '#fff', fontSize: 14 }}
+                    >
+                      {generatedCode}
+                    </code>
+                  </pre>
+                )}
+              </Stack>
             </Stack>
           </Stack>
         </Flex>
