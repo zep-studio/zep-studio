@@ -1,7 +1,8 @@
 import { Box, Flex, Stack } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import React, {
-  useCallback, // useEffect,
+  useCallback,
+  useEffect, // useEffect,
   // useLayoutEffect,
   useMemo,
   useRef,
@@ -105,6 +106,12 @@ App.onSay.Add(function (player, text) {
   `);
 
   const [isPublished, setPublished] = useState<boolean>(false);
+  const [isCodeShown, setCodeShown] = useState<boolean>(false);
+  useEffect(() => {
+    if (isPublished && window.location.href.includes('localhost')) {
+      setCodeShown(true);
+    }
+  }, [isPublished]);
 
   return (
     <main>
@@ -362,7 +369,7 @@ App.onSay.Add(function (player, text) {
                 ></iframe>
               </Stack>
               <Stack p={2}>
-                {!!isPublished && (
+                {isCodeShown && (
                   <HighlightContainer>
                     <SyntaxHighlighter language="js" style={colorscheme}>
                       {generatedCode}
