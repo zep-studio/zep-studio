@@ -1,4 +1,4 @@
-import { Center, Flex } from '@chakra-ui/react';
+import { Center, Flex, useToast } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -10,16 +10,26 @@ import { ZEPStudioIcon } from './ZEPStudioIcon';
 const token = `.AspNetCore.Session=CfDJ8F1b9ttwOadPjVuGHkYnESqZ1oE%2BpTWK0jW7XELN0zg7F%2FT3iW%2BPRbaHSPbkz%2Fdkn2epqcmjynyDjmFyWrdotx%2BSYigPn9xGgWrR8xO2i0nloUdd7CeMxIcsbSGoovoiDk%2BOSWl1XewcM71P2i7ebpd4x6nMCIfbgcdk9qN5TYCQ; max-age=2592000; path=/; secure; samesite=lax; httponly`;
 
 const Navigation: React.FC = () => {
+  const toast = useToast();
   const onPublishClick = async () => {
+    const code = ``;
     try {
-      const zip = await zipZepApp('App.onInit.Add(function () {});');
+      const zip = await zipZepApp(code);
       const id = await publish({
         token,
-        name: '이게나야',
-        description: '설명인데용?',
+        name: 'Hi ZEP Studio!',
+        description: 'Published by ZEP Studio',
         file: zip,
-        type: 1,
+        type: 2,
       });
+      toast({
+        title: 'Published Successful!',
+        description: "We've published your amazing ZEP App!",
+        status: 'success',
+        duration: 6000,
+        isClosable: true,
+      });
+      document.querySelector('iframe')!.src += '';
       console.log(id);
     } catch (err) {
       console.error(err);
