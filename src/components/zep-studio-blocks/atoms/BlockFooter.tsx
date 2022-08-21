@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
 import { useRef, useState } from 'react';
 
-import { SCRIPTAPP_METHODS_SAY_TO_ALL } from '../../../blocks/scriptapp';
+// import { SCRIPTAPP_METHODS_SAY_TO_ALL } from '../../../blocks/scriptapp';
 import { ZEPStudioIcon } from '../../ZEPStudioIcon';
 import { raiseAncestorControlBlock } from './ControlBlockContainer';
 import { Selector, SelectorWrapper } from './Selector';
@@ -33,6 +33,7 @@ export const NEW_BLOCKS = [
 type Props = {
   parentBlockId: string;
   parentBlockType: string;
+  onAddCondition?: () => void;
   onAddNewBlock: (
     blockType: string,
     position: ['location', string, 'if' | 'else'] | ['below', string],
@@ -42,6 +43,7 @@ type Props = {
 export const BlockFooter: React.FC<Props> = ({
   parentBlockId,
   parentBlockType,
+  onAddCondition,
   onAddNewBlock,
 }) => {
   const [isSelectorOpen, setSelectorOpen] = useState<boolean>(false);
@@ -52,6 +54,11 @@ export const BlockFooter: React.FC<Props> = ({
     <SelectorWrapper>
       <Container
         onClick={(event) => {
+          if (parentBlockType === 'condition-start') {
+            onAddCondition?.();
+            return;
+          }
+
           cleanupRef.current = raiseAncestorControlBlock(event.target);
           setSelectorOpen((prev) => !prev);
           setTimeout(() => {

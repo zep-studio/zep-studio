@@ -1,9 +1,11 @@
 import styled from '@emotion/styled';
+import { useCallback, useState } from 'react';
 
 import { ZEPStudioIcon } from '../../ZEPStudioIcon';
 import { BlockFooter } from '../atoms/BlockFooter';
 import { BlockHeader } from '../atoms/BlockHeader';
 import { ControlBlockContainer } from '../atoms/ControlBlockContainer';
+import { ConditionStatementBlock } from '../condition-statements/ConditionStatementBlock';
 import { ControlBlockProps } from '../types';
 
 type Props = ControlBlockProps & {
@@ -14,21 +16,41 @@ type Props = ControlBlockProps & {
   ) => void;
 };
 
+export type ConditionDraft = {
+  left: string;
+  operator: string;
+  right: string;
+};
+
 export const ConditionStartBlock: React.FC<Props> = ({
   blockId,
   children,
   onAddNewBlock,
 }) => {
+  const [conditions, setConditions] = useState<ConditionDraft[]>([]);
+  const onAddCondition = useCallback(() => {
+    setConditions([
+      {
+        left: '',
+        operator: '',
+        right: '',
+      },
+    ]);
+  }, []);
   return (
     <Container>
       <Header>
         <ZEPStudioIcon icon="icon_conditon_24" color="white" size={24} />
         <Title>Condition</Title>
       </Header>
-      {children}
+      {/* {children} */}
+      {conditions.map((item) => (
+        <ConditionStatementBlock key={item.left} />
+      ))}
       <BlockFooter
         parentBlockId={blockId}
         parentBlockType="condition-start"
+        onAddCondition={onAddCondition}
         onAddNewBlock={onAddNewBlock}
       />
     </Container>

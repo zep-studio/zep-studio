@@ -1,4 +1,4 @@
-import { Center } from '@chakra-ui/react';
+import { Center, Select } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
 import { useRef, useState } from 'react';
@@ -9,6 +9,21 @@ import { BlockRemoveButton } from '../atoms/BlockRemoveButton';
 import { raiseAncestorControlBlock } from '../atoms/ControlBlockContainer';
 import { Selector, SelectorWrapper } from '../atoms/Selector';
 
+const LEFT_VALUES = [
+  { value: 'text', title: 'Text', description: 'Text' },
+  { value: 'n', title: 'Number', description: 'Number' },
+  {
+    value: 'text-',
+    title: 'player.id',
+    description: 'ID for the player who said something',
+  },
+  {
+    value: 'player.name',
+    title: 'player.name',
+    description: 'Name for the player who said something',
+  },
+];
+
 type Props = {
   isLastItem?: boolean;
 };
@@ -16,6 +31,11 @@ type Props = {
 export const ConditionStatementBlock: React.FC<Props> = ({
   isLastItem = false,
 }) => {
+  const [left, setLeft] = useState<string>('');
+  // const [right, setRight] = useState<string>('');
+  // const [operator, setOperator] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>('');
+
   const [isLeftValueSelectorOpen, setLeftValueSelectorOpen] =
     useState<boolean>(false);
   const [isRightValueSelectorOpen, setRightValueSelectorOpen] =
@@ -42,19 +62,24 @@ export const ConditionStatementBlock: React.FC<Props> = ({
               });
             }}
           >
-            text
+            {LEFT_VALUES.find((v) => v.value === left)?.title || 'Select...'}
           </BlockVariable>
 
           <AnimatePresence>
             {isLeftValueSelectorOpen && (
               <Selector
                 type="primary"
-                items={Array.from({ length: 10 }, (_, i) => ({
-                  title: 'Touch location',
-                  value: 'Touch',
-                  description:
-                    "When a player arrives in the specified 'specified area'",
-                }))}
+                onSelect={(v) => {
+                  setLeftValueSelectorOpen((prev) => !prev);
+                  setTimeout(() => {
+                    if (isLeftValueSelectorOpen) {
+                      setTimeout(() => cleanupRef.current?.(), 200);
+                    }
+                  });
+
+                  setLeft(v);
+                }}
+                items={LEFT_VALUES}
               />
             )}
           </AnimatePresence>
@@ -73,7 +98,7 @@ export const ConditionStatementBlock: React.FC<Props> = ({
               });
             }}
           >
-            =
+            {left !== 'player.name' ? '=' : 'includes'}
           </BlockActionName>
 
           <AnimatePresence>
@@ -104,10 +129,18 @@ export const ConditionStatementBlock: React.FC<Props> = ({
               });
             }}
           >
-            text
+            {left !== 'player.name' ? (
+              'Select...'
+            ) : (
+              <input
+                style={{ backgroundColor: 'transparent' }}
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+              />
+            )}
           </BlockVariable>
 
-          <AnimatePresence>
+          {/* <AnimatePresence>
             {isRightValueSelectorOpen && (
               <Selector
                 type="primary"
@@ -119,10 +152,10 @@ export const ConditionStatementBlock: React.FC<Props> = ({
                 }))}
               />
             )}
-          </AnimatePresence>
+          </AnimatePresence> */}
         </SelectorWrapper>
 
-        {!isLastItem && (
+        {/* {!isLastItem && (
           <SelectorWrapper className="logic">
             <BlockActionName
               $isSelectorOpen={isLogicSelectorOpen}
@@ -153,7 +186,7 @@ export const ConditionStatementBlock: React.FC<Props> = ({
               )}
             </AnimatePresence>
           </SelectorWrapper>
-        )}
+        )} */}
       </Center>
       <BlockRemoveButton />
     </Container>
@@ -198,18 +231,25 @@ const BlockActionName = styled(BlockAttribute)`
 const BlockVariable = styled(BlockAttribute)`
   /* main/01 */
 
-  background: #f0eefe;
+  &,
+  & > input {
+    background: #f0eefe;
 
-  /* body/01-bold */
+    /* body/01-bold */
 
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 19px;
-  letter-spacing: 0.0125em;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: 0.0125em;
 
-  /* main/04 */
+    /* main/04 */
 
-  color: #6559f6;
+    color: #6559f6;
+
+    &:focus {
+      outline: 0;
+    }
+  }
 `;
 
 const BlockSuffix = styled(BlockAttribute)`
