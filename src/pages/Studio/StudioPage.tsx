@@ -138,7 +138,8 @@ export const StudioPage: React.FC = () => {
                       else: [],
                       end: [],
                     } as ConditionBlockDraft;
-                  } else if (blockType === SCRIPTAPP_METHODS_SAY_TO_ALL) {
+                    // } else if (blockType === SCRIPTAPP_METHODS_SAY_TO_ALL) {
+                  } else {
                     newBlock = {
                       id: uuidv4(),
                       type: 'action',

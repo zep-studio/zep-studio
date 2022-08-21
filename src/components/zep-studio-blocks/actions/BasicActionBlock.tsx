@@ -38,7 +38,7 @@ export const NEW_BLOCKS = [
   {
     hideOnAction: false,
     title: 'Show center label',
-    value: SCRIPTAPP_METHODS_SAY_TO_ALL,
+    value: '-',
     description:
       'Displays text for 1 second at the designated location for all players',
     allowedParentBlockType: [
@@ -51,7 +51,7 @@ export const NEW_BLOCKS = [
   {
     hideOnAction: false,
     title: 'Show YouTube Widget',
-    value: SCRIPTAPP_METHODS_SAY_TO_ALL,
+    value: '-',
     description:
       'Plays the video from the YouTube link at the specified align position for all players',
     allowedParentBlockType: [
@@ -64,7 +64,7 @@ export const NEW_BLOCKS = [
   {
     hideOnAction: false,
     title: 'Play Sound',
-    value: SCRIPTAPP_METHODS_SAY_TO_ALL,
+    value: '-',
     description: 'Function to play the sound file',
     allowedParentBlockType: [
       'trigger',
@@ -76,7 +76,7 @@ export const NEW_BLOCKS = [
   {
     hideOnAction: false,
     title: 'Stop Sound',
-    value: SCRIPTAPP_METHODS_SAY_TO_ALL,
+    value: '-',
     description: 'Function to stop all the playing sound',
     allowedParentBlockType: [
       'trigger',
@@ -88,7 +88,7 @@ export const NEW_BLOCKS = [
   {
     hideOnAction: false,
     title: 'Spawn Player',
-    value: SCRIPTAPP_METHODS_SAY_TO_ALL,
+    value: '-',
     description:
       'Function to move players to the designated X and Y coordinates',
     allowedParentBlockType: [
@@ -155,7 +155,7 @@ export const BasicActionBlock: React.FC<Props> = ({ action }) => {
         </SelectorWrapper>
 
         <SelectorWrapper>
-          {actionValue === SCRIPTAPP_METHODS_SAY_TO_ALL && (
+          {actionName === 'Say' && (
             <BlockVariable
               $isSelectorOpen={isVariableSelectorOpen}
               onClick={(event) => {
@@ -191,7 +191,7 @@ export const BasicActionBlock: React.FC<Props> = ({ action }) => {
           </AnimatePresence> */}
         </SelectorWrapper>
 
-        <BlockSuffix>to All</BlockSuffix>
+        {actionName === 'Say' && <BlockSuffix>to All</BlockSuffix>}
       </Center>
       <BlockRemoveButton />
     </Container>
