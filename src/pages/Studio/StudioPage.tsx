@@ -1,6 +1,13 @@
 import { Box, Flex, Stack } from '@chakra-ui/react';
 import styled from '@emotion/styled';
-import React, { useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import {
@@ -73,7 +80,23 @@ export const StudioPage: React.FC = () => {
     return _blocks;
   }, [blocks]);
 
-  console.log(calculatedBlocks, blocks);
+  const previewView = useRef<HTMLIFrameElement>(null);
+  const refreshPreviewView = useCallback(() => {
+    if (previewView.current) {
+      previewView.current.src += '';
+    }
+  }, [previewView]);
+
+  const [generatedCode, setGeneratedCode] = useState(`
+    var player, text;
+
+    App.onInit.Add(function () {});
+    App.onSay.Add(function (player, text) {
+      for (var count = 0; count < 10; count++) {
+        App.sayToAll(text);
+      }
+    });
+  `);
 
   return (
     <main>
@@ -292,28 +315,16 @@ export const StudioPage: React.FC = () => {
             alignItems="flex-start"
             bg={'gray.600'}
           >
-            <Stack h="100vh" position="sticky" top="0" right="0">
-              <Stack w="100%" h="60vh">
-                <iframe
-                  title="zep-preview"
-                  src="https://zep.us/play/8lPg0e"
-                  height={'100%'}
-                ></iframe>
-              </Stack>
-              <Stack p={2}>
-                <code style={{ color: '#fff' }}>
-                  {`
-                  var player, text;
-
-                  App.onInit.Add(function () {});
-                  App.onSay.Add(function (player, text) {
-                    for (var count = 0; count < 10; count++) {
-                      App.sayToAll(text);
-                    }
-                  });
-                `}
-                </code>
-              </Stack>
+            <Stack w="100%" h="60vh">
+              <iframe
+                title="zep-preview"
+                src="https://zep.us/play/8j7NaQ"
+                ref={previewView}
+                height={'100%'}
+              ></iframe>
+            </Stack>
+            <Stack p={2}>
+              <code style={{ color: '#fff' }}>{generatedCode}</code>
             </Stack>
           </Stack>
         </Flex>

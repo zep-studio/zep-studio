@@ -84,7 +84,7 @@ const BlocklyComponent: React.FC<BlocklyComponentProps> = (props) => {
     trigger.getInput('DO')?.connection.connect(iter.previousConnection);
 
     const say2 = workspace.newBlock(SCRIPTAPP_METHODS_SAY_TO_ALL);
-    // say2.setFieldValue('hi', 'TEXT')
+    say2.setFieldValue('a', 'TEXT');
     iter.getInput('DO')?.connection.connect(say2.previousConnection);
 
     console.log(BlocklyJS.workspaceToCode(workspace));

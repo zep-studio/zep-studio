@@ -54,7 +54,7 @@ Blockly.Blocks[SCRIPTAPP_METHODS_SAY_TO_ALL] = {
       message0: 'Say %1 to All',
       // message0: 'Say %1 with color %2 to All',
       args0: [
-        { type: 'field_string', name: 'TEXT', check: 'String' },
+        { type: 'input_value', name: 'TEXT', check: 'String' },
         // { type: 'input_value', name: 'COLOR', check: 'Number' },
       ],
       previousStatement: null,
