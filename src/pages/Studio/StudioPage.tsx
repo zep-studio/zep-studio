@@ -362,13 +362,13 @@ App.onSay.Add(function (player, text) {
                 ></iframe>
               </Stack>
               <Stack p={2}>
-                {/* {!!isPublished && ( */}
-                <HighlightContainer>
-                  <SyntaxHighlighter language="js" style={colorscheme}>
-                    {generatedCode}
-                  </SyntaxHighlighter>
-                </HighlightContainer>
-                {/* // )} */}
+                {!!isPublished && (
+                  <HighlightContainer>
+                    <SyntaxHighlighter language="js" style={colorscheme}>
+                      {generatedCode}
+                    </SyntaxHighlighter>
+                  </HighlightContainer>
+                )}
               </Stack>
             </Stack>
           </Stack>
