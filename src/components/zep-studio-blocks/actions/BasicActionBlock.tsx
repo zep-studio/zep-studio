@@ -1,9 +1,11 @@
 import { Center } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 
+import { SCRIPTAPP_METHODS_SAY_TO_ALL } from '../../../blocks/scriptapp';
 import { BlockAttribute } from '../atoms/BlockAttribute';
+// import { NEW_BLOCKS } from '../atoms/BlockFooter';
 import { BlockHandle } from '../atoms/BlockHandle';
 import { BlockRemoveButton } from '../atoms/BlockRemoveButton';
 import { raiseAncestorControlBlock } from '../atoms/ControlBlockContainer';
@@ -13,12 +15,105 @@ type Props = {
   action: string;
 };
 
+export const NEW_BLOCKS = [
+  {
+    hideOnAction: true,
+    title: 'Condition',
+    value: 'condition',
+    description: 'Add a new if/else condition',
+    allowedParentBlockType: ['trigger', 'condition-end'],
+  },
+  {
+    hideOnAction: false,
+    title: 'Say',
+    value: SCRIPTAPP_METHODS_SAY_TO_ALL,
+    description: 'Displays text in the chat window',
+    allowedParentBlockType: [
+      'trigger',
+      'condition-fork-if',
+      'condition-fork-else',
+      'condition-end',
+    ],
+  },
+  {
+    hideOnAction: false,
+    title: 'Show center label',
+    value: SCRIPTAPP_METHODS_SAY_TO_ALL,
+    description:
+      'Displays text for 1 second at the designated location for all players',
+    allowedParentBlockType: [
+      'trigger',
+      'condition-fork-if',
+      'condition-fork-else',
+      'condition-end',
+    ],
+  },
+  {
+    hideOnAction: false,
+    title: 'Show YouTube Widget',
+    value: SCRIPTAPP_METHODS_SAY_TO_ALL,
+    description:
+      'Plays the video from the YouTube link at the specified align position for all players',
+    allowedParentBlockType: [
+      'trigger',
+      'condition-fork-if',
+      'condition-fork-else',
+      'condition-end',
+    ],
+  },
+  {
+    hideOnAction: false,
+    title: 'Play Sound',
+    value: SCRIPTAPP_METHODS_SAY_TO_ALL,
+    description: 'Function to play the sound file',
+    allowedParentBlockType: [
+      'trigger',
+      'condition-fork-if',
+      'condition-fork-else',
+      'condition-end',
+    ],
+  },
+  {
+    hideOnAction: false,
+    title: 'Stop Sound',
+    value: SCRIPTAPP_METHODS_SAY_TO_ALL,
+    description: 'Function to stop all the playing sound',
+    allowedParentBlockType: [
+      'trigger',
+      'condition-fork-if',
+      'condition-fork-else',
+      'condition-end',
+    ],
+  },
+  {
+    hideOnAction: false,
+    title: 'Spawn Player',
+    value: SCRIPTAPP_METHODS_SAY_TO_ALL,
+    description:
+      'Function to move players to the designated X and Y coordinates',
+    allowedParentBlockType: [
+      'trigger',
+      'condition-fork-if',
+      'condition-fork-else',
+      'condition-end',
+    ],
+  },
+];
+
 export const BasicActionBlock: React.FC<Props> = ({ action }) => {
   const [isActionSelectorOpen, setActionSelectorOpen] =
     useState<boolean>(false);
   const [isVariableSelectorOpen, setVariableSelectorOpen] =
     useState<boolean>(false);
   const cleanupRef = useRef<any>(null);
+
+  const [actionValue, setActionValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>('');
+
+  const actionName = useMemo(() => {
+    const action = NEW_BLOCKS.find(({ value }) => value === actionValue);
+    return action ? action.title : null;
+  }, [actionValue]);
 
   return (
     <Container className="action-block">
@@ -37,40 +132,51 @@ export const BasicActionBlock: React.FC<Props> = ({ action }) => {
               });
             }}
           >
-            Say
+            {actionName || 'Select...'}
           </BlockActionName>
 
           <AnimatePresence>
             {isActionSelectorOpen && (
               <Selector
-                items={Array.from({ length: 10 }, (_, i) => ({
-                  title: 'Touch location',
-                  value: 'Touch',
-                  description:
-                    "When a player arrives in the specified 'specified area'",
-                }))}
+                items={NEW_BLOCKS.filter((v) => !v.hideOnAction)}
+                onSelect={(v) => {
+                  setActionValue(v);
+
+                  setActionSelectorOpen((prev) => !prev);
+                  setTimeout(() => {
+                    if (isActionSelectorOpen) {
+                      setTimeout(() => cleanupRef.current?.(), 200);
+                    }
+                  });
+                }}
               />
             )}
           </AnimatePresence>
         </SelectorWrapper>
 
         <SelectorWrapper>
-          <BlockVariable
-            $isSelectorOpen={isVariableSelectorOpen}
-            onClick={(event) => {
-              cleanupRef.current = raiseAncestorControlBlock(event.target);
-              setVariableSelectorOpen((prev) => !prev);
-              setTimeout(() => {
-                if (isVariableSelectorOpen) {
-                  setTimeout(() => cleanupRef.current?.(), 200);
-                }
-              });
-            }}
-          >
-            text
-          </BlockVariable>
+          {actionValue === SCRIPTAPP_METHODS_SAY_TO_ALL && (
+            <BlockVariable
+              $isSelectorOpen={isVariableSelectorOpen}
+              onClick={(event) => {
+                cleanupRef.current = raiseAncestorControlBlock(event.target);
+                setVariableSelectorOpen((prev) => !prev);
+                setTimeout(() => {
+                  if (isVariableSelectorOpen) {
+                    setTimeout(() => cleanupRef.current?.(), 200);
+                  }
+                });
+              }}
+            >
+              <input
+                style={{ backgroundColor: 'transparent' }}
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+              />
+            </BlockVariable>
+          )}
 
-          <AnimatePresence>
+          {/* <AnimatePresence>
             {isVariableSelectorOpen && (
               <Selector
                 type="secondary"
@@ -82,7 +188,7 @@ export const BasicActionBlock: React.FC<Props> = ({ action }) => {
                 }))}
               />
             )}
-          </AnimatePresence>
+          </AnimatePresence> */}
         </SelectorWrapper>
 
         <BlockSuffix>to All</BlockSuffix>
@@ -129,19 +235,25 @@ const BlockActionName = styled(BlockAttribute)`
 
 const BlockVariable = styled(BlockAttribute)`
   /* main/01 */
+  &,
+  & > input {
+    background: #f0eefe;
 
-  background: #f0eefe;
+    /* body/01-bold */
 
-  /* body/01-bold */
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: 0.0125em;
 
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 19px;
-  letter-spacing: 0.0125em;
+    /* main/04 */
 
-  /* main/04 */
+    color: #6559f6;
 
-  color: #6559f6;
+    &:focus {
+      outline: 0;
+    }
+  }
 `;
 
 const BlockSuffix = styled(BlockAttribute)`

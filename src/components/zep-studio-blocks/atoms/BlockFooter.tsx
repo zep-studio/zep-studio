@@ -8,17 +8,19 @@ import { ZEPStudioIcon } from '../../ZEPStudioIcon';
 import { raiseAncestorControlBlock } from './ControlBlockContainer';
 import { Selector, SelectorWrapper } from './Selector';
 
-const NEW_BLOCKS = [
+export const NEW_BLOCKS = [
   {
+    hideOnAction: true,
     title: 'Condition',
     value: 'condition',
     description: 'Add a new if/else condition',
     allowedParentBlockType: ['trigger', 'condition-end'],
   },
   {
-    title: 'Say to all',
-    value: SCRIPTAPP_METHODS_SAY_TO_ALL,
-    description: 'Displays text in the chat window',
+    hideOnAction: false,
+    title: 'Action',
+    value: 'action',
+    description: 'Add a new action block',
     allowedParentBlockType: [
       'trigger',
       'condition-fork-if',
@@ -61,7 +63,11 @@ export const BlockFooter: React.FC<Props> = ({
       >
         <Center gap="8px" ref={centerRef}>
           <ZEPStudioIcon icon="icon_plus_24" size={24} />
-          <ButtonTitle>Create a new block</ButtonTitle>
+          <ButtonTitle>
+            {parentBlockType === 'condition-end'
+              ? 'Create a new action'
+              : 'Create a new block'}
+          </ButtonTitle>
         </Center>
       </Container>
 
