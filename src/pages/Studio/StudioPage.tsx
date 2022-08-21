@@ -292,16 +292,17 @@ export const StudioPage: React.FC = () => {
             alignItems="flex-start"
             bg={'gray.600'}
           >
-            <Stack w="100%" h="60vh">
-              <iframe
-                title="zep-preview"
-                src="https://zep.us/play/8lPg0e"
-                height={'100%'}
-              ></iframe>
-            </Stack>
-            <Stack p={2}>
-              <code style={{ color: '#fff' }}>
-                {`
+            <Stack h="100vh" position="sticky" top="0" right="0">
+              <Stack w="100%" h="60vh">
+                <iframe
+                  title="zep-preview"
+                  src="https://zep.us/play/8lPg0e"
+                  height={'100%'}
+                ></iframe>
+              </Stack>
+              <Stack p={2}>
+                <code style={{ color: '#fff' }}>
+                  {`
                   var player, text;
 
                   App.onInit.Add(function () {});
@@ -311,7 +312,8 @@ export const StudioPage: React.FC = () => {
                     }
                   });
                 `}
-              </code>
+                </code>
+              </Stack>
             </Stack>
           </Stack>
         </Flex>
