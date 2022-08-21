@@ -143,7 +143,11 @@ export const StudioPage: React.FC = () => {
                     newBlock = {
                       id: uuidv4(),
                       type: 'action',
-                      action: SCRIPTAPP_METHODS_SAY_TO_ALL,
+                      action:
+                        blockType === 'repeat'
+                          ? 'repeat'
+                          : SCRIPTAPP_METHODS_SAY_TO_ALL,
+                      blocks: [{}],
                     } as ActionBlockDraft;
                   }
                   if (!newBlock) {
@@ -245,6 +249,25 @@ export const StudioPage: React.FC = () => {
                               return null;
                             }
                             if (block.type === 'action') {
+                              console.log(block);
+                              if (block.action === 'repeat') {
+                                return (
+                                  <RepeatActionBlock
+                                    key={block.id}
+                                    // action={block.action}
+                                  >
+                                    {(block as any).blocks.map((_: any) => {
+                                      return (
+                                        <BasicActionBlock
+                                          key={uuidv4()}
+                                          // blockId={block.id}
+                                          action={SCRIPTAPP_METHODS_SAY_TO_ALL}
+                                        />
+                                      );
+                                    })}
+                                  </RepeatActionBlock>
+                                );
+                              }
                               return (
                                 <BasicActionBlock
                                   key={block.id}

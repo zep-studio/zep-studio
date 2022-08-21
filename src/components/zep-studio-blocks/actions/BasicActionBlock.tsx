@@ -10,6 +10,7 @@ import { BlockHandle } from '../atoms/BlockHandle';
 import { BlockRemoveButton } from '../atoms/BlockRemoveButton';
 import { raiseAncestorControlBlock } from '../atoms/ControlBlockContainer';
 import { Selector, SelectorWrapper } from '../atoms/Selector';
+import { RepeatActionBlock } from './RepeatActionBlock';
 
 type Props = {
   action: string;

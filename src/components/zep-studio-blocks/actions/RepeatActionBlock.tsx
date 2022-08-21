@@ -42,7 +42,7 @@ export const RepeatActionBlock: React.FC<Props> = ({ children }) => {
                 });
               }}
             >
-              Say
+              Repeat
             </BlockActionName>
 
             <AnimatePresence>
@@ -72,7 +72,7 @@ export const RepeatActionBlock: React.FC<Props> = ({ children }) => {
                 });
               }}
             >
-              text
+              2
             </BlockVariable>
             <AnimatePresence>
               {isVariableSelectorOpen && (
@@ -88,7 +88,7 @@ export const RepeatActionBlock: React.FC<Props> = ({ children }) => {
             </AnimatePresence>
           </SelectorWrapper>
 
-          <BlockSuffix>to All</BlockSuffix>
+          <BlockSuffix>Times</BlockSuffix>
         </Center>
         <BlockRemoveButton />
       </Container>

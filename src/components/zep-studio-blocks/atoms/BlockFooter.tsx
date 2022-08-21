@@ -28,6 +28,18 @@ export const NEW_BLOCKS = [
       'condition-end',
     ],
   },
+  {
+    hideOnAction: false,
+    title: 'Repeat',
+    value: 'repeat',
+    description: 'Add a new repeat block',
+    allowedParentBlockType: [
+      'trigger',
+      'condition-fork-if',
+      'condition-fork-else',
+      'condition-end',
+    ],
+  },
 ];
 
 type Props = {
