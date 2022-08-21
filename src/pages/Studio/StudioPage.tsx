@@ -88,14 +88,17 @@ export const StudioPage: React.FC = () => {
   }, [previewView]);
 
   const [generatedCode, setGeneratedCode] = useState(`
-    var player, text;
+App.onSay.Add(function (player, text) {
+  App.sayToAll('Hello, this is Junction Asia here');
 
-    App.onInit.Add(function () {});
-    App.onSay.Add(function (player, text) {
-      for (var count = 0; count < 10; count++) {
-        App.sayToAll(text);
-      }
-    });
+  if (player.name.includes('Junction')) {
+    for (let i = 0; i < 3; i++) {
+      App.sayToAll('Welcome to Junction Asia 2022!');
+    }
+  } else {
+    App.sayToAll('Who are you?')
+  }
+});
   `);
 
   return (
@@ -347,8 +350,15 @@ export const StudioPage: React.FC = () => {
                 height={'100%'}
               ></iframe>
             </Stack>
-            <Stack p={2}>
-              <code style={{ color: '#fff' }}>{generatedCode}</code>
+            <Stack p={2} style={{ marginTop: '-15px' }}>
+              <pre>
+                <code
+                  className="language-javascript"
+                  style={{ color: '#fff', fontSize: 14 }}
+                >
+                  {generatedCode}
+                </code>
+              </pre>
             </Stack>
           </Stack>
         </Flex>

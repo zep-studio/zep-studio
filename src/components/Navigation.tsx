@@ -12,7 +12,19 @@ const token = `.AspNetCore.Session=CfDJ8F1b9ttwOadPjVuGHkYnESqZ1oE%2BpTWK0jW7XEL
 const Navigation: React.FC = () => {
   const toast = useToast();
   const onPublishClick = async () => {
-    const code = ``;
+    const code = `
+    App.onSay.Add(function (player, text) {
+      App.sayToAll('Hello, this is Junction Asia here');
+
+      if (player.name.includes('Junction')) {
+        for (let i = 0; i < 3; i++) {
+          App.sayToAll('Welcome to Junction Asia 2022!');
+        }
+      } else {
+        App.sayToAll('Who are you?')
+      }
+    });
+    `;
     try {
       const zip = await zipZepApp(code);
       const id = await publish({
