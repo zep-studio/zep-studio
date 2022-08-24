@@ -39,7 +39,7 @@ const Navigation: React.FC<NavigationProps> = ({ onClickPublish }) => {
         type: 2,
       });
       toast({
-        title: 'Published Successful!',
+        title: 'Publish Successful!',
         description: "We've published your amazing ZEP App!",
         status: 'success',
         duration: 6000,
