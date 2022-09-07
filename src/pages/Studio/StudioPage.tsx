@@ -19,7 +19,6 @@ import {
   SCRIPTAPP_METHODS_SAY_TO_ALL,
 } from '../../blocks/scriptapp';
 import Navigation from '../../components/Navigation';
-import { TriggerBlock } from '../../components/zep-studio-blocks/TriggerBlock';
 import { BasicActionBlock } from '../../components/zep-studio-blocks/actions/BasicActionBlock';
 import { RepeatActionBlock } from '../../components/zep-studio-blocks/actions/RepeatActionBlock';
 // import { ConditionStatementBlock } from '../../components/zep-studio-blocks/condition-statements/ConditionStatementBlock';
@@ -27,6 +26,7 @@ import { ConditionEndBlock } from '../../components/zep-studio-blocks/conditions
 import { ConditionForkBlock } from '../../components/zep-studio-blocks/conditions/ConditionForkBlock';
 import { ConditionForkList } from '../../components/zep-studio-blocks/conditions/ConditionForkList';
 import { ConditionStartBlock } from '../../components/zep-studio-blocks/conditions/ConditionStartBlock';
+import { TriggerBlock } from '../../components/zep-studio-blocks/triggers/TriggerBlock';
 import {
   ActionBlockDraft,
   BlockDraft,

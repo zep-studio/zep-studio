@@ -6,17 +6,17 @@ import { useMemo, useRef, useState } from 'react';
 import {
   SCRIPTAPP_EVENT_LISTENERS_ON_SAY,
   SCRIPTAPP_LIFECYCLE_ON_INIT,
-} from '../../blocks/scriptapp';
-import { ZEPStudioIcon } from '../ZEPStudioIcon';
-import { BlockAttribute } from './atoms/BlockAttribute';
-import { BlockFooter } from './atoms/BlockFooter';
-import { BlockHeader } from './atoms/BlockHeader';
+} from '../../../blocks/scriptapp';
+import { ZEPStudioIcon } from '../../ZEPStudioIcon';
+import { BlockAttribute } from '../atoms/BlockAttribute';
+import { BlockFooter } from '../atoms/BlockFooter';
+import { BlockHeader } from '../atoms/BlockHeader';
 import {
   ControlBlockContainer,
   raiseAncestorControlBlock,
-} from './atoms/ControlBlockContainer';
-import { Selector, SelectorWrapper } from './atoms/Selector';
-import { ControlBlockProps, TriggerBlockDraft } from './types';
+} from '../atoms/ControlBlockContainer';
+import { Selector, SelectorWrapper } from '../atoms/Selector';
+import { ControlBlockProps, TriggerBlockDraft } from '../types';
 
 const TRIGGERS = [
   {
