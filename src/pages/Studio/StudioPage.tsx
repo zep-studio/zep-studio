@@ -1,5 +1,6 @@
-import { Box, Flex, Stack } from '@chakra-ui/react';
+import { Box, Flex, Stack, useToast } from '@chakra-ui/react';
 import styled from '@emotion/styled';
+import copyToClipboard from 'copy-to-clipboard';
 import React, {
   useCallback,
   useEffect, // useEffect,
@@ -106,12 +107,18 @@ App.onSay.Add(function (player, text) {
   `);
 
   const [isPublished, setPublished] = useState<boolean>(false);
-  const [isCodeShown, setCodeShown] = useState<boolean>(false);
-  useEffect(() => {
-    if (isPublished) {
-      setCodeShown(true);
-    }
-  }, [isPublished]);
+  const [isCodeShown] = useState<boolean>(true);
+
+  const toast = useToast();
+  const onClickCopy = useCallback(() => {
+    copyToClipboard(generatedCode.trim());
+    toast({
+      title: 'Copied generated code!',
+      status: 'success',
+      duration: 6000,
+      isClosable: true,
+    });
+  }, [generatedCode, toast]);
 
   return (
     <main>
@@ -378,6 +385,11 @@ App.onSay.Add(function (player, text) {
                 ></iframe>
               </Stack>
               <CodeContainer>
+                <CodeHeader>
+                  <CodeLanguage>JS</CodeLanguage>
+                  <CopyButton onClick={onClickCopy}>Copy</CopyButton>
+                </CodeHeader>
+
                 {isCodeShown && (
                   <HighlightContainer>
                     <SyntaxHighlighter language="js" style={colorscheme}>
@@ -424,9 +436,58 @@ const StrightArrowContainer = styled.div`
 
 const CodeContainer = styled.div`
   margin-top: 0 !important;
+  width: 100%;
+  background-color: #1d1e22;
+
   display: flex;
-  background: #1d1e22;
+  flex-direction: column;
 `;
+const CodeHeader = styled.div`
+  padding: 14px 20px 4px;
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+`;
+const CodeLanguage = styled.span`
+  font-weight: 700;
+  font-size: 21px;
+  line-height: 25px;
+  display: flex;
+  align-items: center;
+  text-align: right;
+  letter-spacing: 0.0125em;
+
+  /* gray/02 */
+
+  color: #e3e7ec;
+`;
+const CopyButton = styled.button`
+  display: flex;
+  padding: 6px 16px;
+  align-items: center;
+  justify-content: center;
+
+  /* gray/04 */
+
+  background: #4d5359;
+  border-radius: 30px;
+
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: center;
+  text-align: right;
+  letter-spacing: 0.0125em;
+
+  /* gray/00 */
+
+  color: #ffffff;
+`;
+
 const HighlightContainer = styled.div`
   display: flex;
 

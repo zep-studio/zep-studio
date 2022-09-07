@@ -17,6 +17,7 @@
     "@emotion/styled": "^11.10.0",
     "axios": "^0.27.2",
     "blockly": "^8.0.5",
+    "copy-to-clipboard": "^3.3.2",
     "emotion-normalize": "^11.0.1",
     "framer-motion": "^7.2.0",
     "jszip": "^3.10.1",
