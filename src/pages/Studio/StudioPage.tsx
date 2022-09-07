@@ -122,7 +122,7 @@ App.onSay.Add(function (player, text) {
             marginTop="68px"
             w="full"
             h="fit-content"
-            minH="200vh"
+            minH="calc(200vh - 68px)"
             padding="54px"
             paddingBottom="500px"
             bg={'gray.200'}
@@ -353,14 +353,23 @@ App.onSay.Add(function (player, text) {
           </Stack>
           <Stack
             w="30vw"
-            h="200vh"
+            maxW="30vw"
+            minW="30vw"
+            minH="200vh"
             position="relative"
             spacing={10}
             alignItems="flex-start"
-            bg={'gray.600'}
+            bg="#1d1e22"
           >
-            <Stack position="sticky" w="full" top="0" left="0" right="0">
-              <Stack w="100%" h="60vh">
+            <Stack
+              position="sticky"
+              w="full"
+              top="0"
+              left="0"
+              right="0"
+              paddingTop="68"
+            >
+              <Stack w="100%" h="calc(60vh - 68px)">
                 <iframe
                   title="zep-preview"
                   src="https://zep.us/play/8j7NaQ"
@@ -368,7 +377,7 @@ App.onSay.Add(function (player, text) {
                   height={'100%'}
                 ></iframe>
               </Stack>
-              <Stack p={2}>
+              <CodeContainer>
                 {isCodeShown && (
                   <HighlightContainer>
                     <SyntaxHighlighter language="js" style={colorscheme}>
@@ -376,7 +385,7 @@ App.onSay.Add(function (player, text) {
                     </SyntaxHighlighter>
                   </HighlightContainer>
                 )}
-              </Stack>
+              </CodeContainer>
             </Stack>
           </Stack>
         </Flex>
@@ -413,6 +422,11 @@ const StrightArrowContainer = styled.div`
   display: flex;
 `;
 
+const CodeContainer = styled.div`
+  margin-top: 0 !important;
+  display: flex;
+  background: #1d1e22;
+`;
 const HighlightContainer = styled.div`
   display: flex;
 
@@ -420,6 +434,6 @@ const HighlightContainer = styled.div`
     padding-top: 0 !important;
     padding-bottom: 0 !important;
     border: 0 !important;
-    background-color: transparent !important;
+    background: transparent !important;
   }
 `;
