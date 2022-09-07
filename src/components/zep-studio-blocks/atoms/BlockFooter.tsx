@@ -146,7 +146,6 @@ const Container = styled.button`
 const ButtonTitle = styled.div`
   /* body/01 */
 
-  font-family: 'Pretendard';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;

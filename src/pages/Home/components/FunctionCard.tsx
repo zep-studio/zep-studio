@@ -74,7 +74,6 @@ const Badge = styled.li`
 
   /* body/01-bold */
 
-  font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
@@ -102,7 +101,6 @@ const FunctionName = styled.h3`
 
   /* subtitle/02 */
 
-  font-family: 'Pretendard';
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
@@ -122,7 +120,6 @@ const FunctionDescription = styled.p`
 
   /* body/01 */
 
-  font-family: 'Pretendard';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;

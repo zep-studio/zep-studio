@@ -99,7 +99,7 @@ const Container = styled(Flex)`
 
 const GrayBreadcrumb = styled.span`
   /* subtitle/02 */
-  font-family: 'Pretendard';
+
   font-style: normal;
   font-weight: 500;
   font-size: 24px;
@@ -113,7 +113,6 @@ const GrayBreadcrumb = styled.span`
 const TitleBreadcrumb = styled.span`
   /* subtitle/02 */
 
-  font-family: 'Pretendard';
   font-style: normal;
   font-weight: 500;
   font-size: 24px;
@@ -137,7 +136,6 @@ const PublishButton = styled.button`
 
   /* body/01-bold */
 
-  font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
   font-size: 16px;

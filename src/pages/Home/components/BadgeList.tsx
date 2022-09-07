@@ -48,7 +48,6 @@ const Badge = styled.li<BadgeProps>`
 
   /* body/01-bold */
 
-  font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
   font-size: 16px;

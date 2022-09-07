@@ -133,7 +133,6 @@ const TitleTypography = styled.img`
 const Description = styled.p`
   /* body/01 */
 
-  font-family: 'Pretendard';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;

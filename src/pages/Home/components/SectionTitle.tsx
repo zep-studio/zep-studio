@@ -34,7 +34,6 @@ const SubtitleRow = styled.div`
 const Subtitle = styled.h2`
   /* subtitle/02 */
 
-  font-family: 'Pretendard';
   font-style: normal;
   font-weight: 500;
   font-size: 24px;
@@ -48,7 +47,6 @@ const Subtitle = styled.h2`
 const FunctionCount = styled.span`
   /* body/01 */
 
-  font-family: 'Pretendard';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;

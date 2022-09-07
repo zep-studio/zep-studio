@@ -48,7 +48,6 @@ const Header = styled(BlockHeader)`
 const Title = styled.span`
   /* subtitle/02 */
 
-  font-family: 'Pretendard';
   font-style: normal;
   font-weight: 500;
   font-size: 20px;

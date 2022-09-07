@@ -66,7 +66,6 @@ const OutlineButton = styled.button`
 
   /* body/01-bold */
 
-  font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
@@ -100,7 +99,6 @@ const PrimaryButton = styled.button`
 
   /* body/01-bold */
 
-  font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
