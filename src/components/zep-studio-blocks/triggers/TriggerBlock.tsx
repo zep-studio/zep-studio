@@ -94,6 +94,7 @@ export const TriggerBlock: React.FC<Props> = ({
                     }
                   });
                 }}
+                onDismiss={() => setTriggerSelectorOpen(false)}
               />
             )}
           </AnimatePresence>

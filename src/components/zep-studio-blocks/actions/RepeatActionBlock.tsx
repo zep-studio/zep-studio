@@ -55,6 +55,7 @@ export const RepeatActionBlock: React.FC<Props> = ({ children }) => {
                     description:
                       "When a player arrives in the specified 'specified area'",
                   }))}
+                  onDismiss={() => setActionSelectorOpen(false)}
                 />
               )}
             </AnimatePresence>
@@ -83,6 +84,7 @@ export const RepeatActionBlock: React.FC<Props> = ({ children }) => {
                     description:
                       "When a player arrives in the specified 'specified area'",
                   }))}
+                  onDismiss={() => setVariableSelectorOpen(false)}
                 />
               )}
             </AnimatePresence>

@@ -150,6 +150,7 @@ export const BasicActionBlock: React.FC<Props> = ({ action }) => {
                     }
                   });
                 }}
+                onDismiss={() => setActionSelectorOpen(false)}
               />
             )}
           </AnimatePresence>

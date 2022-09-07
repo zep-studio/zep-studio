@@ -114,6 +114,7 @@ export const BlockFooter: React.FC<Props> = ({
                 }
               }, 200);
             }}
+            onDismiss={() => setSelectorOpen(false)}
           />
         )}
       </AnimatePresence>

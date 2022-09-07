@@ -1,5 +1,12 @@
 import styled from '@emotion/styled';
 import { HTMLMotionProps, motion } from 'framer-motion';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { findDOMNode } from 'react-dom';
+import { useRecoilState } from 'recoil';
+import { v4 as uuidv4 } from 'uuid';
+
+import { selectorState } from '../../../store/selectorState';
+import { Portal } from '../../Portal';
 
 export type SelectItem = {
   title: string;
@@ -18,51 +25,102 @@ type Props = Omit<HTMLMotionProps<'div'>, 'onSelect'> & {
   type?: 'primary' | 'secondary';
   items?: SelectItem[];
   onSelect?: (value: string) => void;
+  onDismiss: () => void;
 };
 
 export const Selector: React.FC<Props> = ({
   type = 'primary',
   items = [],
   onSelect,
+  onDismiss,
   ...props
 }) => {
-  return (
-    <Container
-      initial={{ opacity: 0, transform: 'translateY(8px)' }}
-      animate={{ opacity: 1, transform: 'translateY(0px)' }}
-      exit={{ opacity: 0, transform: 'translateY(-8px)' }}
-      transition={{ duration: 0.2, ease: 'easeInOut' }}
-      {...props}
-    >
-      {items.map((item) => (
-        <SelectItemContainer
-          key={item.value}
-          onClick={() => onSelect?.(item.value)}
-        >
-          <SelectItemName>
-            <span
-              className={type === 'primary' ? 'circle-purple' : 'circle-blue'}
-            >
-              •
-            </span>{' '}
-            {item.title}
-          </SelectItemName>
-          <SelectItemDescription>{item.description}</SelectItemDescription>
-        </SelectItemContainer>
-      ))}
+  const [offsets, setOffsets] = useState<{ top: number; left: number } | null>(
+    null,
+  );
+  const placeholderRef = useRef<HTMLDivElement>(null);
 
-      <BottomSpacer />
-    </Container>
+  const uuid = useMemo(() => uuidv4(), []);
+  const isUUIDInitializedRef = useRef<boolean>(false);
+  const [currentSelector, setCurrentSelector] = useRecoilState(selectorState);
+
+  useEffect(() => {
+    setCurrentSelector(uuid);
+    setTimeout(() => {
+      isUUIDInitializedRef.current = true;
+    });
+  }, [setCurrentSelector, uuid]);
+
+  useEffect(() => {
+    if (!isUUIDInitializedRef.current) {
+      return;
+    }
+    if (currentSelector !== uuid) {
+      onDismiss();
+    }
+  }, [currentSelector, onDismiss, setCurrentSelector, uuid]);
+
+  useEffect(() => {
+    if (!placeholderRef.current) {
+      return;
+    }
+    const parent = (findDOMNode(placeholderRef.current)?.parentNode ||
+      null) as HTMLElement | null;
+
+    if (!parent) {
+      return;
+    }
+
+    setOffsets({
+      top: (parent?.getBoundingClientRect().top ?? 0) + 43 + 8,
+      left: parent?.getBoundingClientRect().left ?? 0,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [placeholderRef]);
+
+  return (
+    <>
+      <div ref={placeholderRef} />
+      <Portal id="selector-portal">
+        <Container
+          initial={{ opacity: 0, transform: 'translateY(8px)' }}
+          animate={{ opacity: 1, transform: 'translateY(0px)' }}
+          exit={{ opacity: 0, transform: 'translateY(-8px)' }}
+          transition={{ duration: 0.2, ease: 'easeInOut' }}
+          {...props}
+          style={{ ...offsets }}
+        >
+          {items.map((item) => (
+            <SelectItemContainer
+              key={item.value}
+              onClick={() => {
+                onSelect?.(item.value);
+                setCurrentSelector(null);
+              }}
+            >
+              <SelectItemName>
+                <span
+                  className={
+                    type === 'primary' ? 'circle-purple' : 'circle-blue'
+                  }
+                >
+                  •
+                </span>{' '}
+                {item.title}
+              </SelectItemName>
+              <SelectItemDescription>{item.description}</SelectItemDescription>
+            </SelectItemContainer>
+          ))}
+
+          <BottomSpacer />
+        </Container>
+      </Portal>
+    </>
   );
 };
 
 const Container = styled(motion.div)`
-  /* Group 325 */
-
   position: absolute;
-  left: 0;
-  top: ${43 + 8}px;
-
   z-index: 99;
 
   width: 395px;
@@ -81,8 +139,6 @@ const Container = styled(motion.div)`
 
   padding: ${36 - 14.5}px 12px 0px 28px;
   gap: 10px;
-
-  position: absolute;
 
   /* gray/00 */
 

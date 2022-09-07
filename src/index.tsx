@@ -6,6 +6,7 @@ import './index.css';
 
 import { ChakraProvider } from '@chakra-ui/react';
 import { Global } from '@emotion/react';
+import { RecoilRoot } from 'recoil';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -32,7 +33,9 @@ root.render(
           ${emotionNormalize}
         `}
       />
-      <App />
+      <RecoilRoot>
+        <App />
+      </RecoilRoot>
     </ChakraProvider>
   </React.StrictMode>,
 );

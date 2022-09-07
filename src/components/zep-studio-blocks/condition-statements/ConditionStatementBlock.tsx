@@ -80,6 +80,7 @@ export const ConditionStatementBlock: React.FC<Props> = ({
                   setLeft(v);
                 }}
                 items={LEFT_VALUES}
+                onDismiss={() => setLeftValueSelectorOpen(false)}
               />
             )}
           </AnimatePresence>
@@ -111,6 +112,7 @@ export const ConditionStatementBlock: React.FC<Props> = ({
                   description:
                     "When a player arrives in the specified 'specified area'",
                 }))}
+                onDismiss={() => setOperatorSelectorOpen(false)}
               />
             )}
           </AnimatePresence>

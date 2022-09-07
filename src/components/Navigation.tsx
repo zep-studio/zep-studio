@@ -95,6 +95,7 @@ const Container = styled(Flex)`
   top: 0;
   right: 0;
   left: 0;
+  z-index: 1000;
 `;
 
 const GrayBreadcrumb = styled.span`
