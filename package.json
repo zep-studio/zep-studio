@@ -15,13 +15,6 @@
     "@craco/craco": "^6.4.5",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.3.0",
-    "@testing-library/user-event": "^14.4.3",
-    "@types/jest": "^28.1.7",
-    "@types/node": "^18.7.8",
-    "@types/react": "^18.0.17",
-    "@types/react-dom": "^18.0.6",
     "axios": "^0.27.2",
     "blockly": "^8.0.5",
     "emotion-normalize": "^11.0.1",
@@ -35,14 +28,21 @@
     "react-scripts": "5.0.1",
     "react-syntax-highlighter": "^15.5.0",
     "recoil": "^0.7.5",
-    "typescript": "^4.7.4",
     "uuid": "^8.3.2",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^3.4.2",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^14.4.3",
     "@types/axios": "^0.14.0",
-    "@types/uuid": "^8.3.4"
+    "@types/jest": "^29.0.0",
+    "@types/node": "^18.7.15",
+    "@types/react": "^18.0.18",
+    "@types/react-dom": "^18.0.6",
+    "@types/uuid": "^8.3.4",
+    "typescript": "^4.8.2"
   },
   "eslintConfig": {
     "extends": [
