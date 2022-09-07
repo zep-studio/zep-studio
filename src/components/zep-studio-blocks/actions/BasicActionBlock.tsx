@@ -1,20 +1,20 @@
 import { Center } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
+import produce from 'immer';
 import { useMemo, useRef, useState } from 'react';
+import { useRecoilState } from 'recoil';
 
 import { SCRIPTAPP_METHODS_SAY_TO_ALL } from '../../../blocks/scriptapp';
+import { blocksState } from '../../../store/blocksState';
 import { BlockAttribute } from '../atoms/BlockAttribute';
 // import { NEW_BLOCKS } from '../atoms/BlockFooter';
 import { BlockHandle } from '../atoms/BlockHandle';
 import { BlockRemoveButton } from '../atoms/BlockRemoveButton';
 import { raiseAncestorControlBlock } from '../atoms/ControlBlockContainer';
 import { Selector, SelectorWrapper } from '../atoms/Selector';
+import { ActionBlockDraft, VariableDraft } from '../types';
 import { RepeatActionBlock } from './RepeatActionBlock';
-
-type Props = {
-  action: string;
-};
 
 export const NEW_BLOCKS = [
   {
@@ -101,15 +101,20 @@ export const NEW_BLOCKS = [
   },
 ];
 
-export const BasicActionBlock: React.FC<Props> = ({ action }) => {
+type Props = {
+  block: ActionBlockDraft;
+};
+
+export const BasicActionBlock: React.FC<Props> = ({ block }) => {
   const [isActionSelectorOpen, setActionSelectorOpen] =
     useState<boolean>(false);
   const [isVariableSelectorOpen, setVariableSelectorOpen] =
     useState<boolean>(false);
   const cleanupRef = useRef<any>(null);
 
+  const [blocks, setBlocks] = useRecoilState(blocksState);
   const [actionValue, setActionValue] = useState<string>('');
-  const [inputValue, setInputValue] = useState<string>('');
+  // const [inputValue, setInputValue] = useState<string>('');
 
   const actionName = useMemo(() => {
     const action = NEW_BLOCKS.find(({ value }) => value === actionValue);
@@ -157,8 +162,9 @@ export const BasicActionBlock: React.FC<Props> = ({ action }) => {
         </SelectorWrapper>
 
         <SelectorWrapper>
-          {actionName === 'Say' && (
+          {block.variables?.map((variable) => (
             <BlockVariable
+              key={variable.fieldName}
               $isSelectorOpen={isVariableSelectorOpen}
               onClick={(event) => {
                 cleanupRef.current = raiseAncestorControlBlock(event.target);
@@ -172,11 +178,30 @@ export const BasicActionBlock: React.FC<Props> = ({ action }) => {
             >
               <input
                 style={{ backgroundColor: 'transparent' }}
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
+                value={variable.value}
+                onChange={(e) =>
+                  setBlocks((prev) =>
+                    produce(prev, (draft) => {
+                      const actionBlock = draft.find(
+                        (v) => v.id === block.id,
+                      ) as ActionBlockDraft | undefined;
+                      if (!actionBlock || !actionBlock.variables) {
+                        return;
+                      }
+
+                      const variableItem = actionBlock.variables.find(
+                        (v) => v.fieldName === variable.fieldName,
+                      ) as VariableDraft | undefined;
+                      if (!variableItem) {
+                        return;
+                      }
+                      variableItem.value = e.target.value;
+                    }),
+                  )
+                }
               />
             </BlockVariable>
-          )}
+          ))}
 
           {/* <AnimatePresence>
             {isVariableSelectorOpen && (

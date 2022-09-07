@@ -5,7 +5,7 @@ export type ControlBlockProps = {
 export type TriggerBlockDraft = {
   id: string;
   type: 'trigger';
-  trigger: string | undefined;
+  trigger: string;
 };
 
 export type ConditionBlockDraft = {
@@ -16,10 +16,17 @@ export type ConditionBlockDraft = {
   end: (ConditionBlockDraft | ActionBlockDraft)[];
 };
 
+export type VariableDraft = {
+  type: 'text';
+  fieldName: 'TEXT';
+  value: string;
+};
+
 export type ActionBlockDraft = {
   id: string;
   type: 'action';
   action: string;
+  variables?: VariableDraft[];
 };
 
 export type BlockDraft =

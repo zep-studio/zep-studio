@@ -1,10 +1,15 @@
-// import { atom } from 'recoil';
+import { atom } from 'recoil';
 
-// const blocksState = atom<Block[]>({
-//   key: 'blocksState',
-//   default: [],
-// });
+import { SCRIPTAPP_LIFECYCLE_ON_INIT } from '../blocks/scriptapp';
+import { BlockDraft } from '../components/zep-studio-blocks/types';
 
-// export default blocksState;
-
-export {};
+export const blocksState = atom<BlockDraft[]>({
+  key: 'blocksState',
+  default: [
+    {
+      id: 'genesis',
+      type: 'trigger',
+      trigger: SCRIPTAPP_LIFECYCLE_ON_INIT,
+    },
+  ],
+});

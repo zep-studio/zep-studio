@@ -13,6 +13,7 @@ import React, {
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 // @ts-ignore
 import { xonokai as colorscheme } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import { useRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 
 import {
@@ -34,15 +35,11 @@ import {
   ConditionBlockDraft,
   TriggerBlockDraft,
 } from '../../components/zep-studio-blocks/types';
+import { blocksToCode } from '../../core/codegen';
+import { blocksState } from '../../store/blocksState';
 
 export const StudioPage: React.FC = () => {
-  const [blocks, setBlocks] = useState<BlockDraft[]>([
-    {
-      id: 'genesis',
-      type: 'trigger',
-      trigger: SCRIPTAPP_LIFECYCLE_ON_INIT,
-    },
-  ]);
+  const [blocks, setBlocks] = useRecoilState(blocksState);
 
   const calculatedBlocks = useMemo(() => {
     // return blocks;
@@ -105,6 +102,16 @@ App.onSay.Add(function (player, text) {
   }
 });
   `);
+
+  console.log(blocks);
+  useEffect(() => {
+    setGeneratedCode(
+      blocksToCode(
+        blocks.find((v) => v.type === 'trigger') as any,
+        blocks.filter((v) => v.type === 'action') as any,
+      ),
+    );
+  }, [blocks]);
 
   const [isPublished, setPublished] = useState<boolean>(false);
   const [isCodeShown] = useState<boolean>(true);
@@ -171,6 +178,16 @@ App.onSay.Add(function (player, text) {
                           ? 'repeat'
                           : SCRIPTAPP_METHODS_SAY_TO_ALL,
                       blocks: [{ id: uuidv4() }],
+                      variables:
+                        blockType === 'repeat'
+                          ? []
+                          : [
+                              {
+                                type: 'text',
+                                fieldName: 'TEXT',
+                                value: '',
+                              },
+                            ],
                     } as ActionBlockDraft;
                   }
                   if (!newBlock) {
@@ -239,11 +256,7 @@ App.onSay.Add(function (player, text) {
                       onAddNewBlock={onAddNewBlock}
                     >
                       {item.blocks.map((block) => (
-                        <BasicActionBlock
-                          key={block.id}
-                          // blockId={block.id}
-                          action={block.action}
-                        />
+                        <BasicActionBlock key={block.id} block={block} />
                       ))}
                     </TriggerBlock>
                   );
@@ -284,10 +297,7 @@ App.onSay.Add(function (player, text) {
                                         return (
                                           <BasicActionBlock
                                             key={block.id}
-                                            // blockId={block.id}
-                                            action={
-                                              SCRIPTAPP_METHODS_SAY_TO_ALL
-                                            }
+                                            block={block as ActionBlockDraft}
                                           />
                                         );
                                       },
@@ -298,8 +308,7 @@ App.onSay.Add(function (player, text) {
                               return (
                                 <BasicActionBlock
                                   key={block.id}
-                                  // blockId={block.id}
-                                  action={block.action}
+                                  block={block}
                                 />
                               );
                             }
@@ -320,8 +329,7 @@ App.onSay.Add(function (player, text) {
                               return (
                                 <BasicActionBlock
                                   key={block.id}
-                                  // blockId={block.id}
-                                  action={block.action}
+                                  block={block}
                                 />
                               );
                             }
@@ -340,11 +348,7 @@ App.onSay.Add(function (player, text) {
                           }
                           if (block.type === 'action') {
                             return (
-                              <BasicActionBlock
-                                key={block.id}
-                                // blockId={block.id}
-                                action={block.action}
-                              />
+                              <BasicActionBlock key={block.id} block={block} />
                             );
                           }
                           return null;

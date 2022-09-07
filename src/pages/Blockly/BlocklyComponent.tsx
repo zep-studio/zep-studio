@@ -1,6 +1,6 @@
 import prettierParserBabel from 'prettier/parser-babel';
 import prettier from 'prettier/standalone';
-import React, { createElement, useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import './BlocklyComponent.css';
 
@@ -73,8 +73,8 @@ const BlocklyComponent: React.FC<BlocklyComponentProps> = (props) => {
     const init = workspace.newBlock('scriptapp_lifecycle_on_init');
     const trigger = workspace.newBlock('scriptapp_event_listeners_on_say');
 
-    const textVarId = trigger.getFieldValue('TEXT');
-    const textVar = workspace.getVariableById(textVarId);
+    // const textVarId = trigger.getFieldValue('TEXT');
+    // const textVar = workspace.getVariableById(textVarId);
 
     const say1 = workspace.newBlock('scriptapp_methods_say_to_all');
     init.getInput('DO')?.connection.connect(say1.previousConnection);
@@ -84,11 +84,9 @@ const BlocklyComponent: React.FC<BlocklyComponentProps> = (props) => {
     trigger.getInput('DO')?.connection.connect(iter.previousConnection);
 
     const say2 = workspace.newBlock(SCRIPTAPP_METHODS_SAY_TO_ALL);
-
     const text = workspace.newBlock('text');
     text.setFieldValue('HI', 'TEXT');
     say2.getInput('TEXT')?.connection.connect(text.outputConnection);
-
     iter.getInput('DO')?.connection.connect(say2.previousConnection);
 
     console.log(BlocklyJS.workspaceToCode(workspace));
