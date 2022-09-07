@@ -108,7 +108,7 @@ App.onSay.Add(function (player, text) {
   const [isPublished, setPublished] = useState<boolean>(false);
   const [isCodeShown, setCodeShown] = useState<boolean>(false);
   useEffect(() => {
-    if (isPublished && window.location.href.includes('localhost')) {
+    if (isPublished) {
       setCodeShown(true);
     }
   }, [isPublished]);
