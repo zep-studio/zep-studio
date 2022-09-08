@@ -1,9 +1,12 @@
 import { Center, Flex, useToast } from '@chakra-ui/react';
 import styled from '@emotion/styled';
+import { useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 
 import { publish } from '../core/publish';
 import { zipZepApp } from '../core/zip';
+import { generatedCodeState } from '../store/generatedCodeState';
 import { ZEPStudioBadge } from './ZEPStudioBadge';
 import { ZEPStudioIcon } from './ZEPStudioIcon';
 
@@ -14,23 +17,13 @@ type NavigationProps = {
 };
 const Navigation: React.FC<NavigationProps> = ({ onClickPublish }) => {
   const toast = useToast();
-  const onPublishClick = async () => {
-    onClickPublish?.();
-    const code = `
-    App.onSay.Add(function (player, text) {
-      App.sayToAll('Hello, this is Junction Asia here');
 
-      if (player.name.includes('Junction')) {
-        for (let i = 0; i < 3; i++) {
-          App.sayToAll('Welcome to Junction Asia 2022!');
-        }
-      } else {
-        App.sayToAll('Who are you?')
-      }
-    });
-    `;
+  const generatedCode = useRecoilValue(generatedCodeState);
+
+  const onPublishClick = useCallback(async () => {
+    onClickPublish?.();
     try {
-      const zip = await zipZepApp(code);
+      const zip = await zipZepApp(generatedCode);
       const id = await publish({
         token,
         name: 'Hi ZEP Studio!',
@@ -50,7 +43,8 @@ const Navigation: React.FC<NavigationProps> = ({ onClickPublish }) => {
     } catch (err) {
       console.error(err);
     }
-  };
+  }, [generatedCode, onClickPublish, toast]);
+
   const navigate = useNavigate();
 
   return (

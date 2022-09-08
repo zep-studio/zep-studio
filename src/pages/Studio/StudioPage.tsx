@@ -37,6 +37,7 @@ import {
 } from '../../components/zep-studio-blocks/types';
 import { blocksToCode } from '../../core/codegen';
 import { blocksState } from '../../store/blocksState';
+import { generatedCodeState } from '../../store/generatedCodeState';
 
 export const StudioPage: React.FC = () => {
   const [blocks, setBlocks] = useRecoilState(blocksState);
@@ -89,21 +90,7 @@ export const StudioPage: React.FC = () => {
     }
   }, [previewView]);
 
-  const [generatedCode, setGeneratedCode] = useState(`
-App.onSay.Add(function (player, text) {
-  App.sayToAll('Hello, this is Junction Asia here');
-
-  if (player.name.includes('Junction')) {
-    for (let i = 0; i < 3; i++) {
-      App.sayToAll('Welcome to Junction Asia 2022!');
-    }
-  } else {
-    App.sayToAll('Who are you?')
-  }
-});
-  `);
-
-  console.log(blocks);
+  const [generatedCode, setGeneratedCode] = useRecoilState(generatedCodeState);
   useEffect(() => {
     setGeneratedCode(
       blocksToCode(
@@ -111,7 +98,7 @@ App.onSay.Add(function (player, text) {
         blocks.filter((v) => v.type === 'action') as any,
       ),
     );
-  }, [blocks]);
+  }, [blocks, setGeneratedCode]);
 
   const [isPublished, setPublished] = useState<boolean>(false);
   const [isCodeShown] = useState<boolean>(true);
